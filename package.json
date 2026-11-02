@@ -1,0 +1,11 @@
+{
+  "name":"real-occupations-mcp",
+  "version":"1.0.0",
+  "description":"REAL occupations MCP connector — browser authorization and scoped work",
+  "type":"module",
+  "engines":{"node":">=20.11"},
+  "bin":{"real-mcp":"bin/real-mcp.mjs"},
+  "files":["bin","tools.json","README.md","LICENSE"],
+  "license":"MIT",
+  "repository":{"type":"git","url":"https://github.com/DoubleRange/real-mcp.git"}
+}
