@@ -1,6 +1,6 @@
 # REAL 接入指南
 
-供用户和 Agent 共同读取。版本：1.0.0，2026-11-02。
+供用户和 Agent 共同读取。版本：1.0.1，2026-11-02。
 
 ## 自动接入
 
@@ -30,7 +30,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
   "mcpServers": {
     "real": {
       "command": "npx",
-      "args": ["--yes", "--package=https://github.com/DoubleRange/real-mcp/archive/refs/tags/v1.0.0.tar.gz", "real-mcp", "--url", "REAL_ORIGIN"]
+      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
     }
   }
 }
@@ -46,7 +46,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 mcp_servers:
   real:
     command: npx
-    args: [--yes, '--package=https://github.com/DoubleRange/real-mcp/archive/refs/tags/v1.0.0.tar.gz', real-mcp, --url, REAL_ORIGIN]
+    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz', real-mcp, --url, REAL_ORIGIN]
     timeout: 150
     connect_timeout: 30
     enabled: true
@@ -66,7 +66,7 @@ mcp_servers:
         serverName: real
         transport: stdio
         command: npx
-        args: [--yes, '--package=https://github.com/DoubleRange/real-mcp/archive/refs/tags/v1.0.0.tar.gz', real-mcp, --url, REAL_ORIGIN]
+        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz', real-mcp, --url, REAL_ORIGIN]
         env: {}
         cwd: !!js process.cwd()
 ```
@@ -110,7 +110,7 @@ codex mcp add real --url REAL_ORIGIN/mcp
 codex mcp login real
 ```
 
-支持 OAuth 的版本按 REAL 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=https://github.com/DoubleRange/real-mcp/archive/refs/tags/v1.0.0.tar.gz real-mcp --url REAL_ORIGIN` 使用本地连接器。
+支持 OAuth 的版本按 REAL 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
 
 ## Cursor
 

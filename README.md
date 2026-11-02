@@ -13,14 +13,14 @@
 - **远程 MCP**：向支持 Streamable HTTP 的客户端添加 `/mcp` 地址。支持 OAuth 的客户端会打开 REAL 网页，用户登录并批准职业、预算与期限。
 - **npx 本地连接器**：客户端启动此仓库的版本化 Node.js 程序；通过 `real_connect` 获得网页授权链接。适用于 stdio 客户端，不需要 Python 或额外 Skill。
 
-`npx` 是程序启动方式，MCP 是通信协议，两者并不冲突。本包当前通过 GitHub 版本归档分发；它不是 npm 注册表上的同名包。
+`npx` 是程序启动方式，MCP 是通信协议，两者并不冲突。本包通过 REAL 同源版本包分发，源码在 GitHub 按版本公开。Agent 可核对 `/agent.json` 中的 SHA-256；它不是 npm 注册表上的同名包。
 
 ## 安装
 
 Node.js 20.11 或以上。把 `REAL_ORIGIN` 换成 service.json 的 `origin`：
 
 ```sh
-npx --yes --package=https://github.com/DoubleRange/real-mcp/archive/refs/tags/v1.0.0.tar.gz real-mcp --url REAL_ORIGIN
+npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz real-mcp --url REAL_ORIGIN
 ```
 
 命令运行后等待 MCP 客户端通过标准输入发消息，这是正常行为。`--help` 查看参数。Windows 可在配置里使用 `npx.cmd` 的实际绝对路径。

@@ -1,6 +1,6 @@
 {
   "name":"real-occupations-mcp",
-  "version":"1.0.0",
+  "version":"1.0.1",
   "description":"REAL occupations MCP connector — browser authorization and scoped work",
   "type":"module",
   "engines":{"node":">=20.11"},
