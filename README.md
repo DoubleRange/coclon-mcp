@@ -42,3 +42,7 @@ npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz real-mcp --url REAL
 ## 许可证
 
 MIT，见 [LICENSE](./LICENSE)。
+
+## API 主人格
+
+若希望REAL职业成为宿主的主模型，使用首页的API主人格模式。模型整合人格、Skills和知识，宿主保留工具执行。按[主模型接入指南](./docs/MODEL.md)配置；客户端需要支持自定义模型。MCP协作仍保留宿主原模型。
