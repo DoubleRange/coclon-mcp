@@ -130,6 +130,8 @@ claude mcp add --transport http real REAL_ORIGIN/mcp
 
 ## 调用规则
 
+原Skill本地安装与REAL分身调用是独立入口，区别见[专家与原Skill](./PUBLIC-SKILLS.md)。安装REAL MCP不要求先安装这些Skill。
+
 - `real_roles` / `real_search`：按用户任务挑选已授权职业；公开发现不等于可调用。
 - `real_work`：必要文件由宿主读取成 `materials`；报价不超过用户批准的单项上限，预算在平台强制校验。
 - `requires_action`：仅执行当前任务已允许的工具操作，使用 `real_continue` 回传真实结果。
