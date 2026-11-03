@@ -1,21 +1,21 @@
 # REAL 接入指南
 
-供用户和 Agent 共同读取。版本：1.0.1，2026-11-02。
+供用户和 Agent 共同读取。版本：1.1.0，2026-11-02。
 
 ## 自动接入
 
 1. 读取仓库根目录 `service.json`，或用户提供的 REAL `/agent.json?profession=...`。
 2. 识别实际客户端和运行系统。优先使用原生远程 MCP 与 OAuth；客户端缺少 OAuth、仅支持 stdio 时使用下方 npx 连接器。
-3. 合并已有 MCP 配置。解析实际可执行路径，不覆盖其他连接，不安装职业 Skill，不切换主模型。
-4. 让用户在 REAL 页面登录并选择职业、单项上限、总预算和有效期。`preferredProfession` 仅是选择提示，不是授权。
+3. 合并已有 MCP 配置。解析实际可执行路径，不覆盖其他连接，不安装分身 Skill，不切换主模型。
+4. 让用户在 REAL 页面登录并选择分身、单项上限、总预算和有效期。`preferredProfession` 仅是选择提示，不是授权。
 5. 连接后验证 `ping`、`tools/list`、`real_roles`；安装验证不调用 `real_work`，不产生费用。
-6. 用户提供任务后，搜索已授权职业并调用。不存在或未授权时说明情况，不擅自替换职业或扩大范围。
+6. 用户提供任务后，搜索已授权分身并调用。不存在或未授权时说明情况，不擅自替换分身或扩大范围。
 
 ## 远程 MCP
 
 传输：Streamable HTTP；地址为当前服务 `origin` 加 `/mcp`。
 
-OAuth：授权码 + PKCE S256，公开客户端动态注册；资源元信息 `/.well-known/oauth-protected-resource/mcp`，授权服务器元信息 `/.well-known/oauth-authorization-server`。回调地址须事先注册。账号、职业、报价上限、预算和有效期由 REAL 授权页确认。
+OAuth：授权码 + PKCE S256，公开客户端动态注册；资源元信息 `/.well-known/oauth-protected-resource/mcp`，授权服务器元信息 `/.well-known/oauth-authorization-server`。回调地址须事先注册。账号、分身、报价上限、预算和有效期由 REAL 授权页确认。
 
 OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到期重新登录授权；用户可在 REAL 撤销。当前不发 refresh token。
 
@@ -23,14 +23,14 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 
 ## npx
 
-以下配置的 `REAL_ORIGIN` 均替换为用户提供的服务地址；可选在 args 最后添加 `--profession`、职业 slug。Node.js >=20.11；Windows 的 command 可使用实际 `npx.cmd` 路径。
+以下配置的 `REAL_ORIGIN` 均替换为用户提供的服务地址；可选在 args 最后添加 `--profession`、分身 slug。Node.js >=20.11；Windows 的 command 可使用实际 `npx.cmd` 路径。
 
 ```json
 {
   "mcpServers": {
     "real": {
       "command": "npx",
-      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
+      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
     }
   }
 }
@@ -46,7 +46,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 mcp_servers:
   real:
     command: npx
-    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz', real-mcp, --url, REAL_ORIGIN]
+    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz', real-mcp, --url, REAL_ORIGIN]
     timeout: 150
     connect_timeout: 30
     enabled: true
@@ -66,7 +66,7 @@ mcp_servers:
         serverName: real
         transport: stdio
         command: npx
-        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz', real-mcp, --url, REAL_ORIGIN]
+        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz', real-mcp, --url, REAL_ORIGIN]
         env: {}
         cwd: !!js process.cwd()
 ```
@@ -110,7 +110,7 @@ codex mcp add real --url REAL_ORIGIN/mcp
 codex mcp login real
 ```
 
-支持 OAuth 的版本按 REAL 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.0.1.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
+支持 OAuth 的版本按 REAL 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
 
 ## Cursor
 
@@ -132,9 +132,9 @@ claude mcp add --transport http real REAL_ORIGIN/mcp
 
 原Skill本地安装与REAL分身调用是独立入口，区别见[专家与原Skill](./PUBLIC-SKILLS.md)。安装REAL MCP不要求先安装这些Skill。
 
-- `real_roles` / `real_search`：按用户任务挑选已授权职业；公开发现不等于可调用。
+- `real_roles` / `real_search`：按用户任务挑选已授权分身；公开发现不等于可调用。
 - `real_work`：必要文件由宿主读取成 `materials`；报价不超过用户批准的单项上限，预算在平台强制校验。
 - `requires_action`：仅执行当前任务已允许的工具操作，使用 `real_continue` 回传真实结果。
 - 重试：同一任务使用同一 `request_key`，避免新建重复工作。
 - 中断：`real_status` 恢复，`real_cancel` 释放待处理工作的预留积分。
-- 主模型：MCP 是委托职业，宿主保留原模型；REAL `/v1` 是另一条职业主模型接入方式，不能在安装 MCP 时擅自切换。
+- 主模型：MCP 是委托分身，宿主保留原模型；REAL `/v1` 是另一条分身主模型接入方式，不能在安装 MCP 时擅自切换。
