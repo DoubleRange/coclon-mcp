@@ -1,6 +1,8 @@
 # REAL 接入指南
 
-供用户和 Agent 共同读取。版本：1.1.0，2026-11-02。
+供用户和 Agent 共同读取。版本：1.2.0，2026-11-02。
+
+支持范围和逐客户端API选择见[CLIENTS.md](CLIENTS.md)。默认MCP返回任务定制的方法、判断、审美与风格，由宿主执行；简单对话或处理也可直接回答。分身主人可自定义用途提示词。
 
 ## 自动接入
 
@@ -30,7 +32,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
   "mcpServers": {
     "real": {
       "command": "npx",
-      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
+      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
     }
   }
 }
@@ -46,7 +48,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 mcp_servers:
   real:
     command: npx
-    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz', real-mcp, --url, REAL_ORIGIN]
+    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz', real-mcp, --url, REAL_ORIGIN]
     timeout: 150
     connect_timeout: 30
     enabled: true
@@ -66,7 +68,7 @@ mcp_servers:
         serverName: real
         transport: stdio
         command: npx
-        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz', real-mcp, --url, REAL_ORIGIN]
+        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz', real-mcp, --url, REAL_ORIGIN]
         env: {}
         cwd: !!js process.cwd()
 ```
@@ -110,7 +112,7 @@ codex mcp add real --url REAL_ORIGIN/mcp
 codex mcp login real
 ```
 
-支持 OAuth 的版本按 REAL 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
+支持 OAuth 的版本按 REAL 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
 
 ## Cursor
 
@@ -123,6 +125,10 @@ claude mcp add --transport http real REAL_ORIGIN/mcp
 ```
 
 在 MCP 管理界面完成授权。也可添加上方 npx stdio 命令。
+
+## OpenCode / OpenClaw
+
+支持子Agent独立provider时优先按[MODEL.md](MODEL.md)及[CLIENTS.md](CLIENTS.md)配置。选择MCP时使用实际客户端的原生连接接口，不把模型provider配置当作MCP配置。当前REAL尚未逐端到端验证这两个客户端，安装后须报告实际结果。
 
 ## 验证范围
 
@@ -137,4 +143,4 @@ claude mcp add --transport http real REAL_ORIGIN/mcp
 - `requires_action`：仅执行当前任务已允许的工具操作，使用 `real_continue` 回传真实结果。
 - 重试：同一任务使用同一 `request_key`，避免新建重复工作。
 - 中断：`real_status` 恢复，`real_cancel` 释放待处理工作的预留积分。
-- 主模型：MCP 是委托分身，宿主保留原模型；REAL `/v1` 是另一条分身主模型接入方式，不能在安装 MCP 时擅自切换。
+- 主模型：MCP 是委托分身，宿主保留原模型；REAL `/v1` 是另一条宿主子Agent模型接入方式，不能在安装 MCP 时擅自切换。

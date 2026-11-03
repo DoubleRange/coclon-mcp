@@ -20,7 +20,7 @@
 Node.js 20.11 或以上。把 `REAL_ORIGIN` 换成 service.json 的 `origin`：
 
 ```sh
-npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.1.0.tgz real-mcp --url REAL_ORIGIN
+npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz real-mcp --url REAL_ORIGIN
 ```
 
 命令运行后等待 MCP 客户端通过标准输入发消息，这是正常行为。`--help` 查看参数。Windows 可在配置里使用 `npx.cmd` 的实际绝对路径。
@@ -50,3 +50,5 @@ MIT，见 [LICENSE](./LICENSE)。
 ## 个人资料
 
 可在REAL网页单独授权查看或编辑本人资料草稿。默认不允许；旧连接不会自动扩权。工具：real_profile_read、real_profile_update、real_profile_restore。先读revision，再用唯一operation_key提交本人要求的修改；可恢复、不自动发布。该权限不包括原始人格、知识库、密钥或其他账号，且不赋予任何分身调用权限。
+
+用途与接入能力：[客户端流程与支持状态](docs/CLIENTS.md)。API优先用于宿主子Agent，不支持时明确使用MCP方法服务。

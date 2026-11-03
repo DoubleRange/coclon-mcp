@@ -29,7 +29,7 @@ async function connect(replace=false){
 }
 async function rpc(input){
  if(input.jsonrpc!=='2.0'||typeof input.method!=='string')throw Error('Invalid JSON-RPC request');
- if(input.method==='initialize')return {protocolVersion:['2025-11-25','2025-06-18','2025-03-26'].includes(input.params?.protocolVersion)?input.params.protocolVersion:'2025-11-25',capabilities:{tools:{}},serverInfo:{name:'REAL occupations',version:'1.1.0'},instructions};
+ if(input.method==='initialize')return {protocolVersion:['2025-11-25','2025-06-18','2025-03-26'].includes(input.params?.protocolVersion)?input.params.protocolVersion:'2025-11-25',capabilities:{tools:{}},serverInfo:{name:'REAL occupations',version:'1.2.0'},instructions};
  if(input.method==='ping')return {};
  if(input.method==='tools/list')return {tools:tools.map(t=>t.name==='real_connect'?{...t,description:'Connect REAL. Show the returned browser authorization URL, wait for user approval, then call again. Never request passwords. replace starts a fresh approval.',inputSchema:{type:'object',properties:{replace:{type:'boolean'}},additionalProperties:false}}:t)};
  if(input.method!=='tools/call')throw Error('Method not supported');
