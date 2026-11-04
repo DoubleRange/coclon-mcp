@@ -1,15 +1,15 @@
-# REAL 接入指南
+# C.AI 接入指南
 
-供用户和 Agent 共同读取。版本：1.2.0，2026-11-02。
+供用户和 Agent 共同读取。版本：1.2.1，2026-11-04。
 
 支持范围和逐客户端API选择见[CLIENTS.md](CLIENTS.md)。默认MCP返回任务定制的方法、判断、审美与风格，由宿主执行；简单对话或处理也可直接回答。分身主人可自定义用途提示词。
 
 ## 自动接入
 
-1. 读取仓库根目录 `service.json`，或用户提供的 REAL `/agent.json?profession=...`。
+1. 读取仓库根目录 `service.json`，或用户提供的 C.AI `/agent.json?profession=...`。
 2. 识别实际客户端和运行系统。优先使用原生远程 MCP 与 OAuth；客户端缺少 OAuth、仅支持 stdio 时使用下方 npx 连接器。
 3. 合并已有 MCP 配置。解析实际可执行路径，不覆盖其他连接，不安装分身 Skill，不切换主模型。
-4. 让用户在 REAL 页面登录并选择分身、单项上限、总预算和有效期。`preferredProfession` 仅是选择提示，不是授权。
+4. 让用户在 C.AI 页面登录并选择分身、单项上限、总预算和有效期。`preferredProfession` 仅是选择提示，不是授权。
 5. 连接后验证 `ping`、`tools/list`、`real_roles`；安装验证不调用 `real_work`，不产生费用。
 6. 用户提供任务后，搜索已授权分身并调用。不存在或未授权时说明情况，不擅自替换分身或扩大范围。
 
@@ -17,11 +17,11 @@
 
 传输：Streamable HTTP；地址为当前服务 `origin` 加 `/mcp`。
 
-OAuth：授权码 + PKCE S256，公开客户端动态注册；资源元信息 `/.well-known/oauth-protected-resource/mcp`，授权服务器元信息 `/.well-known/oauth-authorization-server`。回调地址须事先注册。账号、分身、报价上限、预算和有效期由 REAL 授权页确认。
+OAuth：授权码 + PKCE S256，公开客户端动态注册；资源元信息 `/.well-known/oauth-protected-resource/mcp`，授权服务器元信息 `/.well-known/oauth-authorization-server`。回调地址须事先注册。账号、分身、报价上限、预算和有效期由 C.AI 授权页确认。
 
-OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到期重新登录授权；用户可在 REAL 撤销。当前不发 refresh token。
+OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到期重新登录授权；用户可在 C.AI 撤销。当前不发 refresh token。
 
-不支持 OAuth 的远程客户端可在 REAL「连接授权」创建受限连接，将密钥存入客户端私有 Headers：`Authorization: Bearer YOUR_PRIVATE_KEY`。不要把密钥放在 URL、提示词、公开配置或 GitHub。也可以改用 npx，免手动填密钥。
+不支持 OAuth 的远程客户端可在 C.AI「连接授权」创建受限连接，将密钥存入客户端私有 Headers：`Authorization: Bearer YOUR_PRIVATE_KEY`。不要把密钥放在 URL、提示词、公开配置或 GitHub。也可以改用 npx，免手动填密钥。
 
 ## npx
 
@@ -32,7 +32,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
   "mcpServers": {
     "real": {
       "command": "npx",
-      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
+      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
     }
   }
 }
@@ -48,7 +48,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 mcp_servers:
   real:
     command: npx
-    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz', real-mcp, --url, REAL_ORIGIN]
+    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz', real-mcp, --url, REAL_ORIGIN]
     timeout: 150
     connect_timeout: 30
     enabled: true
@@ -68,7 +68,7 @@ mcp_servers:
         serverName: real
         transport: stdio
         command: npx
-        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz', real-mcp, --url, REAL_ORIGIN]
+        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz', real-mcp, --url, REAL_ORIGIN]
         env: {}
         cwd: !!js process.cwd()
 ```
@@ -79,7 +79,7 @@ DSH 原生支持 `transport: streamable-http`、`url`、`headers`。其远程 OA
 
 ## WorkBuddy
 
-打开「连接器 → 自定义连接器」（旧版为「插件 → MCP 服务器」）。原生远程连接选 Streamable HTTP，地址填 REAL `/mcp`，按支持的 OAuth 流程授权。
+打开「连接器 → 自定义连接器」（旧版为「插件 → MCP 服务器」）。原生远程连接选 Streamable HTTP，地址填 C.AI `/mcp`，按支持的 OAuth 流程授权。
 
 ```json
 {"mcpServers":{"real":{"type":"streamableHttp","url":"REAL_ORIGIN/mcp"}}}
@@ -95,7 +95,7 @@ DSH 原生支持 `transport: streamable-http`、`url`、`headers`。其远程 OA
 
 适用豆包电脑版的「豆包工作」，需当前版本开放「技能 / 插件 · 连接器 · 伙伴 → 新建自定义连接器」。普通网页聊天入口不能替代连接器配置。
 
-- 有 HTTP / Streamable HTTP 入口：填 REAL `/mcp`，使用客户端提供的 OAuth；若只支持 Headers，填写本人的受限连接密钥。
+- 有 HTTP / Streamable HTTP 入口：填 C.AI `/mcp`，使用客户端提供的 OAuth；若只支持 Headers，填写本人的受限连接密钥。
 - 有 STDIO 入口：使用本指南 npx 配置，首次调用 `real_connect` 完成浏览器授权。
 - 没有自定义连接器入口：先更新或确认账号开放情况；不要虚构已经安装完成。
 
@@ -112,7 +112,7 @@ codex mcp add real --url REAL_ORIGIN/mcp
 codex mcp login real
 ```
 
-支持 OAuth 的版本按 REAL 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.0.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
+支持 OAuth 的版本按 C.AI 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
 
 ## Cursor
 
@@ -128,7 +128,7 @@ claude mcp add --transport http real REAL_ORIGIN/mcp
 
 ## OpenCode / OpenClaw
 
-支持子Agent独立provider时优先按[MODEL.md](MODEL.md)及[CLIENTS.md](CLIENTS.md)配置。选择MCP时使用实际客户端的原生连接接口，不把模型provider配置当作MCP配置。当前REAL尚未逐端到端验证这两个客户端，安装后须报告实际结果。
+支持子Agent独立provider时优先按[MODEL.md](MODEL.md)及[CLIENTS.md](CLIENTS.md)配置。选择MCP时使用实际客户端的原生连接接口，不把模型provider配置当作MCP配置。当前C.AI尚未逐端到端验证这两个客户端，安装后须报告实际结果。
 
 ## 验证范围
 
@@ -136,11 +136,11 @@ claude mcp add --transport http real REAL_ORIGIN/mcp
 
 ## 调用规则
 
-原Skill本地安装与REAL分身调用是独立入口，区别见[专家与原Skill](./PUBLIC-SKILLS.md)。安装REAL MCP不要求先安装这些Skill。
+原Skill本地安装与C.AI分身调用是独立入口，区别见[专家与原Skill](./PUBLIC-SKILLS.md)。安装C.AI MCP不要求先安装这些Skill。
 
 - `real_roles` / `real_search`：按用户任务挑选已授权分身；公开发现不等于可调用。
 - `real_work`：必要文件由宿主读取成 `materials`；报价不超过用户批准的单项上限，预算在平台强制校验。
 - `requires_action`：仅执行当前任务已允许的工具操作，使用 `real_continue` 回传真实结果。
 - 重试：同一任务使用同一 `request_key`，避免新建重复工作。
 - 中断：`real_status` 恢复，`real_cancel` 释放待处理工作的预留积分。
-- 主模型：MCP 是委托分身，宿主保留原模型；REAL `/v1` 是另一条宿主子Agent模型接入方式，不能在安装 MCP 时擅自切换。
+- 主模型：MCP 是委托分身，宿主保留原模型；C.AI `/v1` 是另一条宿主子Agent模型接入方式，不能在安装 MCP 时擅自切换。

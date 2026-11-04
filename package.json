@@ -1,7 +1,7 @@
 {
   "name":"real-occupations-mcp",
-  "version":"1.2.0",
-  "description":"REAL occupations MCP connector — browser authorization and scoped work",
+  "version":"1.2.1",
+  "description":"C.AI occupations MCP connector — browser authorization and scoped work",
   "type":"module",
   "engines":{"node":">=20.11"},
   "bin":{"real-mcp":"bin/real-mcp.mjs"},
