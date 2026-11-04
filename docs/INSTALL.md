@@ -1,6 +1,6 @@
 # C.AI 接入指南
 
-供用户和 Agent 共同读取。版本：1.2.1，2026-11-04。
+供用户和 Agent 共同读取。版本：1.2.2，2026-11-04。
 
 支持范围和逐客户端API选择见[CLIENTS.md](CLIENTS.md)。默认MCP返回任务定制的方法、判断、审美与风格，由宿主执行；简单对话或处理也可直接回答。分身主人可自定义用途提示词。
 
@@ -32,7 +32,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
   "mcpServers": {
     "real": {
       "command": "npx",
-      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
+      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.2.2.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
     }
   }
 }
@@ -48,7 +48,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 mcp_servers:
   real:
     command: npx
-    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz', real-mcp, --url, REAL_ORIGIN]
+    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.2.tgz', real-mcp, --url, REAL_ORIGIN]
     timeout: 150
     connect_timeout: 30
     enabled: true
@@ -68,7 +68,7 @@ mcp_servers:
         serverName: real
         transport: stdio
         command: npx
-        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz', real-mcp, --url, REAL_ORIGIN]
+        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.2.2.tgz', real-mcp, --url, REAL_ORIGIN]
         env: {}
         cwd: !!js process.cwd()
 ```
@@ -112,7 +112,7 @@ codex mcp add real --url REAL_ORIGIN/mcp
 codex mcp login real
 ```
 
-支持 OAuth 的版本按 C.AI 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
+支持 OAuth 的版本按 C.AI 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.2.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
 
 ## Cursor
 

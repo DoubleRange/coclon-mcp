@@ -1,4 +1,4 @@
-# COLLABORATORS · C.AI MCP
+# COCLON · C.AI MCP
 
 通过 MCP 调用 C.AI 分身。宿主 Agent 负责整体任务，C.AI 提供已授权分身的判断、表达、方法与工作结果。
 
@@ -20,7 +20,7 @@
 Node.js 20.11 或以上。把 `REAL_ORIGIN` 换成 service.json 的 `origin`：
 
 ```sh
-npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.1.tgz real-mcp --url REAL_ORIGIN
+npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.2.2.tgz real-mcp --url REAL_ORIGIN
 ```
 
 命令运行后等待 MCP 客户端通过标准输入发消息，这是正常行为。`--help` 查看参数。Windows 可在配置里使用 `npx.cmd` 的实际绝对路径。
@@ -53,4 +53,4 @@ MIT，见 [LICENSE](./LICENSE)。
 
 用途与接入能力：[客户端流程与支持状态](docs/CLIENTS.md)。API优先用于宿主子Agent，不支持时明确使用MCP方法服务。
 
-品牌：COLLABORATORS，简称C.AI。1.2.1为品牌更新；工具名、授权、配置路径与已有连接保持兼容。
+品牌：COCLON，简称C.AI。1.2.2为品牌更新；工具名、授权、配置路径与已有连接保持兼容。
