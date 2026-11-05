@@ -1,11 +1,24 @@
 {
-  "name":"coclon-mcp",
-  "version":"1.4.0",
-  "description":"COCLON cyber twins — persistent MCP connection and scoped work",
-  "type":"module",
-  "engines":{"node":">=20.11"},
-  "bin":{"coclon-mcp":"bin/real-mcp.mjs","real-mcp":"bin/real-mcp.mjs"},
-  "files":["bin","tools.json","README.md","LICENSE"],
-  "license":"MIT",
-  "repository":{"type":"git","url":"https://github.com/DoubleRange/coclon-mcp.git"}
+  "name": "coclon-mcp",
+  "version": "1.5.0",
+  "description": "COCLON cyber twins \u2014 persistent MCP connection and scoped work",
+  "type": "module",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "bin": {
+    "coclon-mcp": "bin/real-mcp.mjs",
+    "real-mcp": "bin/real-mcp.mjs"
+  },
+  "files": [
+    "bin",
+    "tools.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DoubleRange/coclon-mcp.git"
+  }
 }

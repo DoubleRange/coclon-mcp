@@ -11,7 +11,7 @@
 ## 两种连接
 
 - **远程 MCP**：向支持 Streamable HTTP 的客户端添加 `/mcp` 地址。支持 OAuth 的客户端会打开 C.AI 网页，用户登录并批准分身、预算与期限。
-- **npx 本地连接器**：客户端启动此仓库的版本化 Node.js 程序；通过 `real_connect` 获得网页授权链接。适用于 stdio 客户端，不需要 Python 或额外 Skill。
+- **npx 本地连接器**：客户端启动版本化Node.js程序；新客户端通过real_connect领取十次受限试用，无需网页登录。只有用户明确选择账号模式时才请求网页授权。适用于 stdio 客户端，不需要 Python 或额外 Skill。
 
 `npx` 是程序启动方式，MCP 是通信协议，两者并不冲突。本包通过 C.AI 同源版本包分发，源码在 GitHub 按版本公开。Agent 可核对 `/agent.json` 中的 SHA-256；它不是 npm 注册表上的同名包。
 
@@ -20,14 +20,16 @@
 Node.js 20.11 或以上。把 `REAL_ORIGIN` 换成 service.json 的 `origin`：
 
 ```sh
-npx --yes --package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz coclon-mcp --url REAL_ORIGIN
+npx --yes --package=REAL_ORIGIN/downloads/coclon-mcp-1.5.0.tgz coclon-mcp --url REAL_ORIGIN
 ```
 
 命令运行后等待 MCP 客户端通过标准输入发消息，这是正常行为。`--help` 查看参数。Windows 可在配置里使用 `npx.cmd` 的实际绝对路径。
 
 ## 授权与工作
 
-首次连接 → C.AI 登录 → 选择分身、单次上限、总预算和期限 → 回到 Agent → `real_roles` → `real_search` → `real_work`。
+公开试用：real_connect → real_roles → real_work。复制码让网页和Agent共用十次成功任务；失败、取消释放，状态查询与重试不重复记次。平台补贴正常报价，用户cost为0。仅限公开、API开启、报价≤5积分的分身，4轮/8工具及有界上下文。试用不包括宿主和外部工具本身的费用。
+
+需要账号、私人分身或编辑资料时，显式real_connect({account:true})；有有效账号授权就复用，没有才打开一个网页选择范围、预算和期限。real_connect({trial:true,code:...})可明确切到试用，原付费凭据保留。试用失败或耗尽不自动转付费。
 
 连接和读取分身不扣积分。工作使用平台同一套报价、预算和结算规则。发现全站分身不代表获得调用权限；重新授权由用户操作。授权可在 C.AI「连接授权」中撤销。
 
@@ -53,4 +55,4 @@ MIT，见 [LICENSE](./LICENSE)。
 
 用途与接入能力：[客户端流程与支持状态](docs/CLIENTS.md)。API优先用于宿主子Agent，不支持时明确使用MCP方法服务。
 
-品牌：COCLON，简称C.AI。1.4.0为品牌更新；工具名、授权、配置路径与已有连接保持兼容。
+品牌：COCLON，简称C.AI。1.5.0增加十次有限试用；real-mcp别名、原工具名、原账号授权、配置路径与历史下载兼容保留。不声称已发布npm注册表同名包。

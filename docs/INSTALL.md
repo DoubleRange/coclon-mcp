@@ -1,6 +1,16 @@
 # C.AI 接入指南
 
-供用户和 Agent 共同读取。版本：1.4.0，2026-11-04。
+供用户和 Agent 共同读取。版本：1.5.0，2026-11-05。
+
+## 公开试用 · 无需网页登录
+
+先读取用户给的 `/agent.json`，核对 `trial.available`。为true时默认使用1.5.0本地stdio连接器。已安装旧版时原位升级归档参数，保留同一连接名、私有凭据与其他配置，不创建重复服务器。
+
+调用 `real_connect({trial:true,code:trial.code})`，没有code可省略。首次领取受限试用，随后保存身份持续复用；不打开网页、不问密码、不追问预算。短期码十五分钟有效，首次兑换绑定客户端，重试不重领。后续任务不必反复读取安装文档。
+
+十次成功任务由网页、MCP、API和不同分身共用；失败/取消释放，重试、安装和工具往返不额外扣次。平台承担正常报价补贴，用户cost为0。仅限公开、启用API、报价≤5积分的分身，单项最多4轮/8工具且限制材料和输出。读取real_roles的trial.remaining；不要猜测余额。
+
+用完或失败后停止，不能自动使用付费连接。用户明确选择账号、私人分身或编辑资料时才调用 `real_connect({account:true})`，复用原账号授权；确实缺少授权才展示一个链接。软件不能运行stdio时说明远程MCP的账号授权路径或网页试用，不声称所有客户端均可免登录。
 
 支持范围和逐客户端API选择见[CLIENTS.md](CLIENTS.md)。默认MCP返回任务定制的方法、判断、审美与风格，由宿主执行；简单对话或处理也可直接回答。分身主人可自定义用途提示词。
 
@@ -13,13 +23,13 @@
 1. 读取仓库根目录 `service.json`，或用户提供的 C.AI `/agent.json?profession=...`。
 2. 识别实际客户端和运行系统。优先使用原生远程 MCP 与 OAuth；客户端缺少 OAuth、仅支持 stdio 时使用下方 npx 连接器。
 3. 合并已有 MCP 配置。解析实际可执行路径，不覆盖其他连接，不安装分身 Skill，不切换主模型。
-4. 让用户在 C.AI 页面登录并选择分身、单项上限、总预算和有效期。`preferredProfession` 仅是选择提示，不是授权。
+4. 公开试用走上述路径；只有用户明确选择账号模式时，才在C.AI页面登录并选择分身、单项上限、总预算与有效期。`preferredProfession`不是授权。
 5. 连接后验证 `ping`、`tools/list`、`real_roles`；安装验证不调用 `real_work`，不产生费用。
 6. 用户提供任务后，搜索已授权分身并调用。不存在或未授权时说明情况，不擅自替换分身或扩大范围。
 
 同一 Agent 重启后继续读取原私有凭据。不要把凭据存在临时目录，不要用人物 slug 作为配置文件名；连接按服务地址保存，多个人物共用该连接允许的范围。npx 1.4.0 继续读取原 `.real/mcp` 凭据及 `REAL_CONNECTOR_CONFIG`，`real-mcp` 命令继续兼容。新名称为 `coclon-mcp`；本项目提供的是网站托管归档，不声称已发布同名 npm 包。
 
-公开链接不包含密钥，不会自动取得账号权限。当前尚未开放匿名十次调用；免费报价也不等于免授权。安装、查看连接与查询分身列表不扣积分。
+公开链接不包含长期密钥，不会自动取得账号权限。短期码只兑换有限试用；没有私人资料或编辑权限。安装、列表和状态查询不扣积分。支持动态重载的宿主检查实际工具后继续；需要新会话的客户端如实说明，不反复重装。
 
 如果宿主模型在工具发现或参数生成阶段报 `finish_reason=length`，而请求尚未到达 COCLON，不要删除连接或反复授权。先检查宿主模型的工具调用兼容性与输出限制。2026-11-05，Hermes + deepseek-v4-flash 的已有连接复用通过；Hermes + MiniMax-M3 在该阶段未通过，根因未定，不自动更换用户模型。
 
@@ -42,13 +52,13 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
   "mcpServers": {
     "real": {
       "command": "npx",
-      "args": ["--yes", "--package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz", "coclon-mcp", "--url", "REAL_ORIGIN"]
+      "args": ["--yes", "--package=REAL_ORIGIN/downloads/coclon-mcp-1.5.0.tgz", "coclon-mcp", "--url", "REAL_ORIGIN"]
     }
   }
 }
 ```
 
-连接器仅在运行机器上提供 stdio；先调用 `real_connect`，把返回的授权 URL 给用户，等用户批准后再次调用。始终保留用户所选范围和预算。
+连接器在运行机器上提供stdio。先调用real_connect，新公开试用自动连接。只有显式account=true且缺少有效账号凭据时，才展示返回的单个授权URL。保留原账号范围与预算，不因试用而扩权。
 
 ## Hermes
 
@@ -60,7 +70,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 mcp_servers:
   real:
     command: npx
-    args: [--yes, '--package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz', coclon-mcp, --url, REAL_ORIGIN]
+    args: [--yes, '--package=REAL_ORIGIN/downloads/coclon-mcp-1.5.0.tgz', coclon-mcp, --url, REAL_ORIGIN]
     timeout: 150
     connect_timeout: 30
     enabled: true
@@ -80,7 +90,7 @@ mcp_servers:
         serverName: real
         transport: stdio
         command: npx
-        args: [--yes, '--package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz', coclon-mcp, --url, REAL_ORIGIN]
+        args: [--yes, '--package=REAL_ORIGIN/downloads/coclon-mcp-1.5.0.tgz', coclon-mcp, --url, REAL_ORIGIN]
         env: {}
         cwd: !!js process.cwd()
 ```
@@ -124,7 +134,7 @@ codex mcp add real --url REAL_ORIGIN/mcp
 codex mcp login real
 ```
 
-支持 OAuth 的版本按 C.AI 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz coclon-mcp --url REAL_ORIGIN` 使用本地连接器。
+支持 OAuth 的版本按 C.AI 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/coclon-mcp-1.5.0.tgz coclon-mcp --url REAL_ORIGIN` 使用本地连接器。
 
 ## Cursor
 

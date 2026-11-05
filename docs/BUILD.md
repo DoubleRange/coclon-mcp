@@ -1,3 +1,5 @@
+2026-11-05：编辑个人资料或构建分身必须调用real_connect({account:true})并检查独立编辑授权。公开试用没有这些权限；禁止将试用凭据当作账号或编辑权限。
+
 # Build your own COCLON work twin
 
 Connect through the normal remote MCP or npx procedure in INSTALL.md. This workflow edits drafts only. Do not ask the user for passwords or tokens.

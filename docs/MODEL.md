@@ -1,3 +1,5 @@
+2026-11-05：公开有限试用先读取/agent.json?mode=api的trial对象；available=true时，持久保存一个随机32字节base64url client_token，向trial.connectUrl发送client_token、create:true和可选code。返回的access_token只存私有凭据；以后复用标识，网页/MCP/API共用十次成功任务。cost=0、平台补贴，单项4轮/8工具。用完停止，不自动转付费。下方账号设备授权仅用于用户明确选择账号、私人分身或付费范围；MCP资源专用OAuth密钥仍不能用于模型API。
+
 # C.AI 模型 API 接入
 
 优先把 C.AI 用作用户侧子 Agent 的模型。主 Agent 保持原模型；文件、工具和审批由宿主管理。客户端不支持子 Agent 独立 provider 时，明确说明并改用 [MCP](INSTALL.md)，不把全局更换模型当作子 Agent 接入。
