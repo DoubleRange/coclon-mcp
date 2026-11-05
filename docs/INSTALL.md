@@ -1,10 +1,14 @@
 # C.AI 接入指南
 
-供用户和 Agent 共同读取。版本：1.3.0，2026-11-04。
+供用户和 Agent 共同读取。版本：1.4.0，2026-11-04。
 
 支持范围和逐客户端API选择见[CLIENTS.md](CLIENTS.md)。默认MCP返回任务定制的方法、判断、审美与风格，由宿主执行；简单对话或处理也可直接回答。分身主人可自定义用途提示词。
 
 ## 自动接入
+
+先检查是否已经接入。相同服务地址下，`real`、`coclon`、`C.AI` 可能都是已有连接名称；复用其中有效的一条，不创建重复配置。通过 `real_roles` 检查已保存授权，返回正常就直接使用。分身变化只影响选择，不重新安装或重新授权。网络中断、限流或服务器暂时不可用时保留凭据，重试原请求。
+
+以下步骤仅用于确实没有连接或需要修复的客户端。Agent自行识别客户端、系统和配置路径，不要求用户回答已经能从本机确定的问题。缺少具体任务时不追问任务；接入成功只简短确认。需要授权时只展示一个链接，预算、分身与有效期在同一页面选择，不连续开窗。凭据过期、撤销或用户明确变更权限时才重新授权。
 
 1. 读取仓库根目录 `service.json`，或用户提供的 C.AI `/agent.json?profession=...`。
 2. 识别实际客户端和运行系统。优先使用原生远程 MCP 与 OAuth；客户端缺少 OAuth、仅支持 stdio 时使用下方 npx 连接器。
@@ -12,6 +16,10 @@
 4. 让用户在 C.AI 页面登录并选择分身、单项上限、总预算和有效期。`preferredProfession` 仅是选择提示，不是授权。
 5. 连接后验证 `ping`、`tools/list`、`real_roles`；安装验证不调用 `real_work`，不产生费用。
 6. 用户提供任务后，搜索已授权分身并调用。不存在或未授权时说明情况，不擅自替换分身或扩大范围。
+
+同一 Agent 重启后继续读取原私有凭据。不要把凭据存在临时目录，不要用人物 slug 作为配置文件名；连接按服务地址保存，多个人物共用该连接允许的范围。npx 1.4.0 继续读取原 `.real/mcp` 凭据及 `REAL_CONNECTOR_CONFIG`，`real-mcp` 命令继续兼容。新名称为 `coclon-mcp`；本项目提供的是网站托管归档，不声称已发布同名 npm 包。
+
+公开链接不包含密钥，不会自动取得账号权限。当前尚未开放匿名十次调用；免费报价也不等于免授权。安装、查看连接与查询分身列表不扣积分。
 
 ## 远程 MCP
 
@@ -32,7 +40,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
   "mcpServers": {
     "real": {
       "command": "npx",
-      "args": ["--yes", "--package=REAL_ORIGIN/downloads/real-mcp-1.3.0.tgz", "real-mcp", "--url", "REAL_ORIGIN"]
+      "args": ["--yes", "--package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz", "coclon-mcp", "--url", "REAL_ORIGIN"]
     }
   }
 }
@@ -48,7 +56,7 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 mcp_servers:
   real:
     command: npx
-    args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.3.0.tgz', real-mcp, --url, REAL_ORIGIN]
+    args: [--yes, '--package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz', coclon-mcp, --url, REAL_ORIGIN]
     timeout: 150
     connect_timeout: 30
     enabled: true
@@ -68,7 +76,7 @@ mcp_servers:
         serverName: real
         transport: stdio
         command: npx
-        args: [--yes, '--package=REAL_ORIGIN/downloads/real-mcp-1.3.0.tgz', real-mcp, --url, REAL_ORIGIN]
+        args: [--yes, '--package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz', coclon-mcp, --url, REAL_ORIGIN]
         env: {}
         cwd: !!js process.cwd()
 ```
@@ -112,7 +120,7 @@ codex mcp add real --url REAL_ORIGIN/mcp
 codex mcp login real
 ```
 
-支持 OAuth 的版本按 C.AI 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/real-mcp-1.3.0.tgz real-mcp --url REAL_ORIGIN` 使用本地连接器。
+支持 OAuth 的版本按 C.AI 页面批准连接。也可通过 `codex mcp add real -- npx --yes --package=REAL_ORIGIN/downloads/coclon-mcp-1.4.0.tgz coclon-mcp --url REAL_ORIGIN` 使用本地连接器。
 
 ## Cursor
 
