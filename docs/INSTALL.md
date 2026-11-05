@@ -54,6 +54,8 @@ OAuth 连接密钥限定 MCP 资源，不能拿来切换 `/v1` 主模型。到�
 
 在 Hermes MCP 配置中增加以下条目；配置根层为 `mcp_servers`，不是 `mcpServers`。具体文件路径与重载方式以用户正在运行的 Hermes 版本为准。
 
+先查已有 `real` / `coclon` 条目，复用凭据并保留其他配置。不要同时启用同一服务的旧连接和未完成认证的新连接。仅填远程 `url` 不代表已配置OAuth；本次核对的Hermes版本需要显式 `auth: oauth` 才启用其持久化OAuth管理器。没有确认该客户端OAuth配置时，使用下方stdio连接器，凭据由连接器持续保存。
+
 ```yaml
 mcp_servers:
   real:
