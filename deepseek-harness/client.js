@@ -222,6 +222,17 @@ var TYPERT_REMOTE = createTypertRemoteInfo({
 // ops/deepseek-harness/client.source.mjs
 var h = react.default.createElement, { useState, useEffect, useRef } = react.default;
 var css = `.coclon-panel{font-family:inherit;font-size:14px;line-height:1.6;--cc-line:color-mix(in srgb,currentColor 15%,transparent);--cc-muted:color-mix(in srgb,currentColor 68%,transparent);max-width:900px}.coclon-panel *{box-sizing:border-box}.coclon-panel h3,.coclon-panel h4,.coclon-panel p{margin:0}.coclon-panel h3{font-size:18px;font-weight:600}.coclon-panel h4{font-size:14px;font-weight:500}.cc-top,.cc-actions,.cc-account,.cc-metrics{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cc-top{justify-content:space-between;margin-bottom:20px}.cc-account{justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--cc-line)}.cc-metrics{gap:24px;margin-top:16px}.cc-metrics span{display:block;font-size:12px;color:var(--cc-muted)}.cc-metrics strong{font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}.cc-muted{color:var(--cc-muted);font-size:12px}.coclon-panel button,.coclon-panel input{font:inherit;color:inherit}.coclon-panel button{min-height:36px;cursor:pointer;border:0;border-radius:6px;padding:6px 12px;background:transparent}.coclon-panel button:hover{background:color-mix(in srgb,currentColor 7%,transparent)}.coclon-panel button:focus-visible,.coclon-panel a:focus-visible,.coclon-panel input:focus-visible{outline:2px solid currentColor;outline-offset:3px}.coclon-panel button:disabled{opacity:.5;cursor:default}.coclon-panel .cc-primary{background:CanvasText;color:Canvas}.cc-notice{padding:12px 0;color:var(--cc-muted);font-size:13px}.cc-error{padding:10px 0;color:#b23d32}.cc-search{display:flex;gap:8px;margin:20px 0 16px}.cc-search input{min-width:0;flex:1;border:0;box-shadow:inset 0 0 0 1px var(--cc-line);background:transparent;border-radius:6px;padding:8px 12px}.cc-grid{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}.cc-people{display:flex;flex-direction:column;gap:4px}.cc-person{display:flex;align-items:center;gap:10px;text-align:left;width:100%}.cc-person[aria-pressed=true]{background:color-mix(in srgb,currentColor 7%,transparent)}.cc-avatar{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;background:color-mix(in srgb,currentColor 8%,transparent);border-radius:8px;overflow:hidden}.cc-avatar img{width:100%;height:100%;object-fit:cover}.cc-role{padding:16px 0;border-bottom:1px solid var(--cc-line)}.cc-role:first-of-type{padding-top:12px}.cc-role-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.cc-role p{font-size:13px;color:var(--cc-muted);margin:6px 0 10px}.cc-role-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}.cc-role-foot span{font-size:12px;color:var(--cc-muted)}.cc-selected{font-size:13px;margin:16px 0;color:var(--cc-muted)}.coclon-panel a{color:inherit;text-underline-offset:3px}.cc-empty{padding:24px 0;color:var(--cc-muted);font-size:13px}@media(max-width:600px){.cc-grid{grid-template-columns:1fr;gap:16px}.cc-people{flex-direction:row;overflow-x:auto;padding-bottom:8px}.cc-person{flex:0 0 auto;width:auto}.cc-metrics{gap:20px}}`;
+var detailCss = ".cc-grid{grid-template-columns:216px minmax(0,1fr);gap:32px}.cc-person{padding:12px!important;align-items:center;gap:12px!important}.cc-avatar{flex-basis:48px;width:48px;height:48px;border-radius:12px}.cc-person-copy{display:flex;flex-direction:column;gap:3px;min-width:0}.cc-person-copy strong{font-size:14px;font-weight:500}.cc-person-copy small{font-size:12px;color:var(--cc-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:134px}.cc-profile{display:flex;gap:20px;align-items:flex-start;padding:0 0 24px}.cc-profile .cc-avatar{flex-basis:88px;width:88px;height:104px;border-radius:14px;font-size:32px}.cc-profile-copy{min-width:0;flex:1}.cc-profile h3{font-size:24px;line-height:1.25;margin-bottom:6px}.cc-profile-headline{font-size:13px;font-weight:500}.cc-profile-intro{font-size:13px;color:var(--cc-muted);line-height:1.75;margin:12px 0!important;white-space:pre-line;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}.cc-profile a{font-size:12px}.cc-experience{margin:0 0 20px;padding:0;font-size:12px;color:var(--cc-muted)}.cc-experience p+p{margin-top:8px}.cc-roles-title{margin:4px 0 12px!important;font-size:12px!important;color:var(--cc-muted)}.cc-role{padding:18px!important;margin-bottom:10px;border:0;box-shadow:inset 0 0 0 1px var(--cc-line);border-radius:12px}.cc-role[data-selected=true]{background:color-mix(in srgb,currentColor 3%,transparent);box-shadow:inset 0 0 0 1.5px currentColor}.cc-role-head h4{font-size:16px;font-weight:500}.cc-role-head>span{white-space:nowrap}.cc-skills{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.cc-skills span{font-size:11px;padding:2px 7px;border-radius:4px;background:color-mix(in srgb,currentColor 6%,transparent);color:var(--cc-muted)}.cc-role p{line-height:1.75;margin:10px 0 14px}.cc-role-foot span:before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor;margin-right:6px}.cc-top{margin-bottom:16px}.cc-metrics{padding-bottom:8px}.cc-metrics strong{font-size:18px}.cc-selected{padding:10px 0 0}.cc-empty:empty,.cc-error:empty{display:none}@media(max-width:600px){.cc-grid{grid-template-columns:1fr;gap:20px}.cc-people{gap:6px}.cc-person{max-width:200px;padding:10px!important}.cc-avatar{flex-basis:40px;width:40px;height:40px}.cc-profile{gap:16px}.cc-profile .cc-avatar{flex-basis:72px;width:72px;height:88px}.cc-profile h3{font-size:22px}.cc-profile-intro{-webkit-line-clamp:4}.cc-role{padding:16px!important}.cc-role-head h4{font-size:15px}.cc-role-head{align-items:start}}";
+var avatar = (person, large = false) => h("span", { className: "cc-avatar" }, person.portraitUrl ? h("img", {
+	src: person.portraitUrl,
+	alt: large ? person.name + "的头像" : "",
+	loading: "lazy",
+	referrerPolicy: "no-referrer",
+	onError: (event) => {
+		event.currentTarget.hidden = true;
+		event.currentTarget.parentElement.textContent = (person.name || "?").slice(0, 1);
+	}
+}) : (person.name || "?").slice(0, 1));
 var link = (url, text) => h("a", {
 	href: url,
 	target: "_blank",
@@ -316,7 +327,7 @@ function Panel({ request }) {
 	return h("section", {
 		className: "coclon-panel",
 		"aria-label": "COCLON 控制面板"
-	}, h("style", null, css), h("header", { className: "cc-top" }, h("div", null, h("h3", null, "COCLON"), h("p", { className: "cc-muted" }, "人物 · 赛博分身")), h("button", {
+	}, h("style", null, css + detailCss), h("header", { className: "cc-top" }, h("div", null, h("h3", null, "COCLON"), h("p", { className: "cc-muted" }, "人物 · 赛博分身")), h("button", {
 		type: "button",
 		disabled: Boolean(busy),
 		onClick: () => run("刷新中", refresh)
@@ -354,17 +365,13 @@ function Panel({ request }) {
 		className: "cc-person",
 		"aria-pressed": p.slug === person,
 		onClick: () => setPerson(p.slug)
-	}, h("span", { className: "cc-avatar" }, p.portraitUrl ? h("img", {
-		src: p.portraitUrl,
-		alt: "",
-		loading: "lazy",
-		referrerPolicy: "no-referrer"
-	}) : (p.name || "?").slice(0, 1)), h("span", null, p.name)))), h("div", null, current && h("div", null, h("h4", null, current.name), h("p", { className: "cc-muted" }, current.intro), origin && link(origin + "/creators/" + encodeURIComponent(current.slug), "个人主页")), current?.roles.map((role) => {
+	}, avatar(p), h("span", { className: "cc-person-copy" }, h("strong", null, p.name), h("small", null, p.headline || p.roles.map((r) => r.title).join(" · ")))))), h("div", null, current && h(react.default.Fragment, null, h("div", { className: "cc-profile" }, avatar(current, true), h("div", { className: "cc-profile-copy" }, h("h3", null, current.name), current.headline && h("p", { className: "cc-profile-headline" }, current.headline), current.intro && h("p", { className: "cc-profile-intro" }, current.intro), origin && link(origin + "/creators/" + encodeURIComponent(current.slug), "查看个人主页 ↗"))), current.experience?.length > 0 && h("div", { className: "cc-experience" }, current.experience.map((text, index) => h("p", { key: index }, text))), h("h4", { className: "cc-roles-title" }, "Ta 的赛博分身 · " + current.roles.length)), current?.roles.map((role) => {
 		const allowed = authorized.has(role.id) || authorized.has(role.slug), active = state?.selectedId === role.id || state?.selectedId === role.slug;
 		return h("article", {
 			className: "cc-role",
-			key: role.id
-		}, h("div", { className: "cc-role-head" }, h("h4", null, role.title), h("span", { className: "cc-muted" }, role.price + " 积分 / 次")), role.summary && h("p", null, role.summary), h("div", { className: "cc-role-foot" }, h("span", null, allowed ? "可调用" : state?.connected ? "需授权" : "连接后选择"), h("button", {
+			key: role.id,
+			"data-selected": active
+		}, h("div", { className: "cc-role-head" }, h("h4", null, role.title), h("span", { className: "cc-muted" }, role.price + " 积分 / 次")), role.summary && h("p", null, role.summary), role.skills?.length > 0 && h("div", { className: "cc-skills" }, role.skills.map((skill) => h("span", { key: skill }, skill))), h("div", { className: "cc-role-foot" }, h("span", null, allowed ? "可调用" : state?.connected ? "需授权" : "连接后选择"), h("button", {
 			type: "button",
 			disabled: Boolean(busy) || !allowed || active,
 			className: active ? "" : "cc-primary",

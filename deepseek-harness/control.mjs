@@ -22,7 +22,7 @@ export class ControlPanel {
   const pending=await read(this.file+'.pending'),url=pending?.deadline>Date.now()?this.authorizationUrl(pending.verification_uri_complete):'';
   return {origin:this.origin,connected:Boolean(account),account,roles:roles.map(role=>this.role(role)),selectedId:this.selectedId,pendingUrl:url,problem};
  }
- role(r){return {id:r.id||r.slug||'',slug:r.slug||'',name:r.name||r.ownerName||'',title:r.serviceTitle||r.title||r.role||'赛博分身',price:r.price??0,personaSlug:r.personaSlug||'',summary:(r.serviceOutcome||r.intro||'').slice(0,240)};}
+ role(r){return {id:r.id||r.slug||'',slug:r.slug||'',name:r.name||r.ownerName||'',title:r.serviceTitle||r.title||r.role||'赛博分身',price:r.price??0,personaSlug:r.personaSlug||'',summary:(r.serviceOutcome||r.intro||'').slice(0,240),skills:(r.skillNames||[]).filter(x=>typeof x==='string').slice(0,4).map(x=>x.slice(0,60))};}
  authorizationUrl(value){try{const u=new URL(value);return u.origin===this.origin&&u.pathname==='/connect'?u.href:'';}catch{return '';}}
  async connect(mode){
   if(!['account','trial'].includes(mode))throw Error('连接方式无效');if(this.busy)return this.busy;
@@ -33,7 +33,7 @@ export class ControlPanel {
  }
  async browse(query=''){
   if(typeof query!=='string'||query.length>100)throw Error('搜索内容过长');const result=await this.json('/api/creators?q='+encodeURIComponent(query));
-  return {people:(result.creators||[]).map(person=>({slug:person.slug,name:person.name||'',intro:(person.intro||'').slice(0,240),portraitUrl:this.image(person.portraitUrl),roles:(person.professions||[]).map(r=>this.role({...r,personaSlug:person.slug,name:person.name}))}))};
+  return {people:(result.creators||[]).map(person=>({slug:person.slug,name:person.name||'',headline:(person.role||person.publicExpert?.headline||'').slice(0,100),intro:(person.intro||'').slice(0,700),experience:(person.experienceSummaries||[]).filter(x=>typeof x==='string').slice(0,2).map(x=>x.slice(0,160)),portraitUrl:this.image(person.portraitUrl),roles:(person.professions||[]).map(r=>this.role({...r,personaSlug:person.slug,name:person.name}))}))};
  }
  image(value){try{const u=new URL(value,this.origin);return u.origin===this.origin&&(u.pathname.startsWith('/api/site/assets/')||u.pathname.startsWith('/assets/'))?u.href:'';}catch{return '';}}
  async select(id){
