@@ -1,16 +1,62 @@
 {
   "name": "dsh-plugin-coclon",
-  "version": "0.1.0",
-  "description": "COCLON cyber twins for DeepSeek Harness",
+  "version": "0.2.0",
+  "description": "COCLON people, cyber twins, account and credits for DeepSeek Harness",
   "type": "module",
   "main": "index.mjs",
-  "exports": {".": "./index.mjs", "./package.json": "./package.json"},
-  "files": ["index.mjs", "connection.mjs", "cordis.patch.yml", "connector", "README.md", "LICENSE"],
+  "exports": {
+    ".": "./index.mjs",
+    "./package.json": "./package.json",
+    "./client": "./client.js",
+    "./typert": "./remote.mjs",
+    "./remote": "./remote.mjs",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "index.mjs",
+    "connection.mjs",
+    "cordis.patch.yml",
+    "connector",
+    "README.md",
+    "LICENSE",
+    "client.js",
+    "control.mjs",
+    "service.mjs",
+    "remote.mjs",
+    "locale",
+    "client.source.mjs",
+    "THIRD_PARTY_LICENSES.txt"
+  ],
   "license": "MIT",
-  "engines": {"node": ">=24.9.0", "dsh": ">=0.2.2-rc.1 <0.3.0"},
-  "peerDependencies": {"@deepseek-ai/cordis": "~4.1.0", "@deepseek-ai/dsh-mcp-client": "0.2.2-rc.1"},
-  "dependencies": {"@deepseek-ai/schemastery": "~3.19.0"},
-  "dsh": {"bundle": {"patch": "./cordis.patch.yml"}},
-  "repository": {"type": "git", "url": "https://github.com/DoubleRange/coclon-mcp.git", "directory": "deepseek-harness"},
+  "engines": {
+    "node": ">=24.9.0",
+    "dsh": ">=0.2.2-rc.1 <0.3.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.1.0",
+    "@deepseek-ai/dsh-mcp-client": "0.2.2-rc.1",
+    "@deepseek-ai/dsh-typert-protocol": "0.2.2-rc.1"
+  },
+  "dependencies": {
+    "@deepseek-ai/schemastery": "~3.19.0",
+    "zod": "4.4.3"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-ui-plugin-manager"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DoubleRange/coclon-mcp.git",
+    "directory": "deepseek-harness"
+  },
   "homepage": "https://github.com/DoubleRange/coclon-mcp/blob/main/docs/DEEPSEEK-HARNESS.md"
 }

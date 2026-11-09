@@ -1,6 +1,7 @@
 import Schema from '@deepseek-ai/schemastery';
 import * as mcp from '@deepseek-ai/dsh-mcp-client';
 import {connectionConfig,defaultOrigin} from './connection.mjs';
+import {CoclonControl} from './service.mjs';
 
 export const name='coclon';
 export const inject=mcp.inject;
@@ -17,4 +18,5 @@ export async function apply(ctx,config){
  const result=await mcp.Config['~standard'].validate(connectionConfig(config));
  if(result.issues)throw Error('Invalid COCLON MCP configuration: '+result.issues.map(x=>x.message).join('; '));
  await mcp.apply(ctx,result.value);
+ await ctx.plugin(CoclonControl,config);
 }
