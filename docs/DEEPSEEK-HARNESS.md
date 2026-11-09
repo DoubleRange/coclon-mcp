@@ -62,7 +62,23 @@ MCP 是给 Agent 的调用接口；插件是在同一接口上增加可见的账
 
 **模型 API，可选方式**：设置 → 模型 → 添加模型提供商 → 自定义模型 API。Provider ID 用 `coclon`，基础 URL 为清单所在服务器的 `/v1`，协议选择 **OpenAI Chat Completions**。凭据使用 COCLON 已授权的私有访问密钥；从「获取可用模型」或 `GET /v1/models` 选择精确分身模型 ID。不得选 Responses 或 Anthropic Messages。令牌只进入 Harness 私有凭据系统，不输出到对话、URL 或 Git。
 
-用户明确选择该模型后，COCLON 负责模型推理与分身上下文，Harness 继续负责执行工具。不要因安装 MCP 插件自动改掉主模型。独立子 Agent 的模型分配尚未在本轮验证；需要保留主模型时先使用 MCP，不宣称已经配置了 API 子 Agent。
+用户明确选择该模型后，COCLON 负责模型推理与分身上下文，Harness 继续负责执行工具。不要因安装 MCP 插件自动改掉主模型。
+
+### 给子智能体单独分配模型
+
+官方已发布 SDK `0.2.2-rc.1` 支持此能力，但要分别满足三个条件：
+
+1. COCLON：现有密钥的 `GET /v1/models` 包含目标分身；401 表示凭据失效，列表缺少模型需核对授权、公开状态或报价限制，不能换成同名人物。
+2. Harness「设置 → 模型」：添加或复用 COCLON 自定义模型提供商。Provider ID 如 `coclon`，`baseURL` 为本网站 `/v1`，协议 OpenAI Chat Completions；密钥保存在私有凭据系统。添加提供商不更换当前主模型。
+3. Harness「插件 → 子智能体」：开启子智能体模型选择，将准确的提供商和模型组合加入允许列表。**保存后开启新对话**；当前对话的允许列表在会话创建时已经固定，不因后续设置自动扩大。
+
+例如 FX 的「色彩搭配」模型 ID 为 `real-frontier-0a3958b110`，允许组合是 `provider=coclon` 和该精确模型 ID；`coclon` 必须替换成实际已注册的 Provider ID。先由 `/v1/models` 确认可见，再设置，不能仅依据公开页面取得访问权。
+
+新对话中调用 `list_subagent_models`（当前安装版本提供此工具时）核对可用组合，再用实际子智能体工具 schema 同时传入 `provider` 与 `model`。不要猜工具名或将模型 ID 填成 provider。子智能体执行后确认其实际模型；主 Agent 保持原模型。安装检查只做发现，不发起计费任务。
+
+若 Agent 只列出 `sufe-kun`，它只是当前可见的模型路由；需依次核对上述三项，不能直接断言 COCLON 未授权 FX。插件的 MCP 选择面板不会自动注册 API 模型。MCP 路径是原模型向 FX 咨询；API 子智能体路径才是子智能体使用 FX 的人格、Skills 与知识推理，同时由 Harness 执行工具。
+
+核对依据：已安装官方 `dsh-tool-subagent` 的 `Config.modelSelection/modelDiscovery`、`model-selection-settings` 的新顶层会话策略，以及 `AllowedModelRoute` 精确匹配。已确认 SDK 结构支持，不冒充用户桌面配置完成或 FX 真实任务实测。若旧版没有这些设置/工具，先核对版本，暂用 MCP，不为此改掉主模型。
 
 ## 维护与实测边界
 
