@@ -8,6 +8,10 @@
 
 详细安装步骤、各软件配置与兼容状态：[INSTALL.md](./docs/INSTALL.md)。
 
+## DeepSeek Harness
+
+提供原生可安装插件：[安装与模型 API 连接](docs/DEEPSEEK-HARNESS.md)。读取当前服务 `/deepseek-harness.json` 获得版本包及 SHA-256。公开代码位于 [deepseek-harness/](deepseek-harness/)，不包含私人资料。
+
 ## 两种连接
 
 - **远程 MCP**：向支持 Streamable HTTP 的客户端添加 `/mcp` 地址。支持 OAuth 的客户端会打开 C.AI 网页，用户登录并批准分身、预算与期限。

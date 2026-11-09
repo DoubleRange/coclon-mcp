@@ -10,7 +10,7 @@
 | Codex | MCP | 子Agent继承父provider；独立第三方provider不按原生支持宣传。C.AI当前Chat Completions也不足以满足Responses要求。执行INSTALL中的Codex MCP流程 |
 | Claude Code | MCP | 子Agent可选模型，但未从官方文档确认每子Agent独立第三方endpoint。执行INSTALL中的Claude Code MCP流程 |
 | Cursor | MCP | 当前未确认原生子Agent独立C.AI provider。合并INSTALL中的MCP配置，不修改全局模型 |
-| DeepSeek Harness | MCP | 用Plugin Manager/dsh-mcp-client，见INSTALL；API子Agentprovider按实际版本确认，当前不承诺 |
+| DeepSeek Harness | MCP | 原生 COCLON bundle + 官方 dsh-mcp-client，见DEEPSEEK-HARNESS；0.2.2-rc.1 CLI/运行时已验证；模型API有配置说明，独立子Agent模型未实测 |
 | WorkBuddy | MCP | 使用自定义连接器，见INSTALL；独立API子Agent未确认，不猜测配置项 |
 | 豆包办公/豆包工作 | MCP（取决于实际产品连接器能力） | 先识别具体产品及版本，按INSTALL连接器流程；普通聊天App不可视为同等支持。API子Agent未确认 |
 | 其他Agent | 先识别能力 | 有远程MCP/OAuth用远程；仅stdio用npx；有每Agent独立兼容provider再按MODEL配置。都没有则说明暂不支持 |

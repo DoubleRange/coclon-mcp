@@ -78,26 +78,17 @@ mcp_servers:
 
 ## DeepSeek Harness
 
-使用 Creator 模式的 Plugin Manager。官方插件为 `@deepseek-ai/dsh-mcp-client`，不是在 DSH 中写一个通用 `mcpServers` JSON。按当前版本的官方 Plugin Manager 接口安装配置 bundle，检查结果为 `application: applied`，再验证运行工具。
+优先读取当前 `/agent.json` 的 `plugins.deepseekHarness`：提供原生插件 tarball、校验值和当前服务器地址。安装到实际正在使用的 profile；已有同一 COCLON 连接则复用，不重复安装。
 
-配置条目示意：
-
-```yaml
-- insert:
-    - id: real-mcp
-      name: '@deepseek-ai/dsh-mcp-client'
-      config:
-        serverName: real
-        transport: stdio
-        command: npx
-        args: [--yes, '--package=REAL_ORIGIN/downloads/coclon-mcp-1.5.0.tgz', coclon-mcp, --url, REAL_ORIGIN]
-        env: {}
-        cwd: !!js process.cwd()
+```sh
+dsh plugin --profile desktop add https://sellers-sleeping-accounting-retirement.trycloudflare.com/downloads/dsh-plugin-coclon-0.1.0.tgz
 ```
 
-DSH 原生支持 `transport: streamable-http`、`url`、`headers`。其远程 OAuth 能力随版本变化，未确认当前版本能完成登录时优先用上述 npx 方式。DSH 的真实模型工具名带命名空间，如 `mcp__real__real_roles`。
+Web 使用实际的 `web` 或自定义 profile，不能照抄 desktop。插件也可通过插件页面或创造模式的 Plugin Manager 安装。先核对 `application: applied`，再检查 `mcp__coclon__real_connect` 和 `real_roles`；`restart-required` 表示还没有在当前运行时生效。安装检查不调用 `real_work`、不扣试用次数。
 
-官方资料：[持久插件](https://deepseek-harness.github.io/deepseek-harness/en/develop/practice/dynamic-cordis)、[MCP 示例](https://deepseek-harness.github.io/deepseek-harness/en/guide/mcp-memory)。
+沿用原私有凭据，连接只设置一次。原生包内置 1.5.0 连接器，使用官方 `@deepseek-ai/dsh-mcp-client`；不用通用 `mcpServers` JSON，不修改主模型，不额外安装 Skill。
+
+完整设置、API 模型接法及实测范围：[DeepSeek Harness](DEEPSEEK-HARNESS.md)。不兼容版本可按该版官方 MCP 客户端配置使用现有通用 stdio 桥，但不能宣称本插件已在该版通过。
 
 ## WorkBuddy
 

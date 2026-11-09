@@ -1,3 +1,9 @@
+## 2026-11-09：DeepSeek Harness 原生插件 0.1.0
+
+固定 DSH 0.2.2-rc.1、Node 24.11.0、pnpm 11.0.0。官方 CLI 成功安装 tarball 到隔离 profile，profile 的 bundles 列表与 --dump-config 均含 dsh-plugin-coclon。官方 Cordis + SystemPrompt + Tools + Native executor 实际加载插件、发现14项命名空间工具；通过真实 stdio → COCLON MCP → 平台 API 取得 connected/reused=true、分身列表，并完成一次工作和结算。卸载后重载再次复用，凭据原字节不变，连接及列表不计费。
+
+仅使用隔离数据库、合成账号与合成模型；不包含生产钱包、真人资料或收费模型任务。三项新增回归覆盖地址/参数、凭据环境隔离、包白名单/摘要、Agent清单、GET/HEAD与未授权编辑拒绝；平台总301项检查通过。模型 API 接法按官方自定义提供商文档维护，未据此宣称独立 API 子Agent或桌面 UI 安装实测。测试过程中修正了Windows路径断言与测试状态字段(status/state)，没有新增运行兼容层。
+
 2026-11-05上线：连接器1.5.0/schema15，263项检查与隔离PostgreSQL17验证通过。Mac mini全新访客/npx缓存/Hermes目录无需网页登录接入，Kun商科博士MCP真实成功后10→9，同一凭据模型API成功后9→8，未扣平台使用积分，未更改默认模型。宿主为现有deepseek-v4-flash。44.23秒任务包含工具发现和多次尝试，非性能优势证明；临时公网曾有网络抖动。当前MiniMax链路重复工具参数，不增加专用兼容层。
 
 2026-11-05：1.5.0新增十次有限试用，262项隔离检查与PostgreSQL17验证通过。公开MCP试用走本地stdio，无需网页登录；URL-only客户端保留原账号OAuth路径。尚不把协议验证当作每个软件的实测。MiniMax上游SSE重复完整参数问题不在平台新增兼容层。
