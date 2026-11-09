@@ -157,3 +157,6 @@ claude mcp add --transport http real REAL_ORIGIN/mcp
 - 重试：同一任务使用同一 `request_key`，避免新建重复工作。
 - 中断：`real_status` 恢复，`real_cancel` 释放待处理工作的预留积分。
 - 主模型：MCP 是委托分身，宿主保留原模型；C.AI `/v1` 是另一条宿主子Agent模型接入方式，不能在安装 MCP 时擅自切换。
+
+
+服务地址以仓库 service.json 的 websiteUrl / origin 或平台 agent.json 的 websiteUrl 为准。服务名 COCLON，简称不是域名，不得据此猜测网址。授权页只勾选必要权限后连接，具体人物在接入后查询与调用；原连接可以复用，不因界面简化而重新授权。

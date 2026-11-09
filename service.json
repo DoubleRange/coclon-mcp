@@ -2,7 +2,8 @@
   "origin": "https://sellers-sleeping-accounting-retirement.trycloudflare.com",
   "mcpUrl": "https://sellers-sleeping-accounting-retirement.trycloudflare.com/mcp",
   "agentEntry": "https://sellers-sleeping-accounting-retirement.trycloudflare.com/agent.json",
-  "note": "Current temporary service origin. Read agentEntry for the current connection manifest. No credentials.",
+  "note": "COCLON service. Use websiteUrl/origin exactly; the brand abbreviation is not a hostname. Read agentEntry for current connection methods.",
   "name": "COCLON",
-  "shortName": "C.AI"
+  "shortName": "C.AI",
+  "websiteUrl": "https://sellers-sleeping-accounting-retirement.trycloudflare.com"
 }
