@@ -2,6 +2,7 @@ import {readFile,writeFile,mkdir,rename} from 'node:fs/promises';
 import {dirname,join} from 'node:path';
 import {homedir} from 'node:os';
 import {createHash,randomUUID} from 'node:crypto';
+import {PluginUpdates} from './updates.mjs';
 import {connectionConfig} from './connection.mjs';
 
 const read=async path=>{try{return JSON.parse(await readFile(path,'utf8'));}catch(e){if(e.code==='ENOENT')return null;throw Error('本地连接资料无法读取');}};
@@ -9,6 +10,7 @@ export class ControlPanel {
  constructor(config,{call,fetcher=fetch,ambient=process.env}={}){
   const connection=connectionConfig(config,{ambient});this.origin=connection.args[2];this.call=call;this.fetcher=fetcher;
   this.file=connection.env.REAL_CONNECTOR_CONFIG||join(homedir(),'.real','mcp',createHash('sha256').update(this.origin).digest('hex').slice(0,20)+'.json');
+  this.updates=new PluginUpdates(this.origin,{cacheDir:join(dirname(this.file),'plugin-updates'),fetcher});
   this.selectionFile=this.file+'.selection';this.selectedId=config.preferredProfession||'';this.busy=null;
  }
  async load(){const saved=await read(this.selectionFile);if(saved?.origin===this.origin&&typeof saved.professionId==='string')this.selectedId=saved.professionId;}
@@ -42,6 +44,7 @@ export class ControlPanel {
  }
  async action(input){
   if(!input||typeof input!=='object'||Array.isArray(input))throw Error('操作无效');
+  if(input.kind==='check_update')return this.updates.check();if(input.kind==='prepare_update')return this.updates.prepare(input);
   if(input.kind==='status')return this.status();if(input.kind==='browse')return this.browse(input.query||'');if(input.kind==='connect')return this.connect(input.mode);if(input.kind==='select')return this.select(input.id);throw Error('操作无效');
  }
 }

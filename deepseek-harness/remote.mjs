@@ -4,6 +4,8 @@ import {createTypertRemoteInfo} from '@deepseek-ai/dsh-typert-protocol/remote-in
 // Maintained contract for the single, allowlisted control-panel endpoint.
 const input=()=>z.discriminatedUnion('kind',[
  z.object({kind:z.literal('status')}).strict(),
+ z.object({kind:z.literal('check_update')}).strict(),
+ z.object({kind:z.literal('prepare_update'),version:z.string().regex(/^\d+\.\d+\.\d+$/),sha256:z.string().regex(/^[a-f0-9]{64}$/)}).strict(),
  z.object({kind:z.literal('browse'),query:z.string().max(100).optional()}).strict(),
  z.object({kind:z.literal('connect'),mode:z.enum(['account','trial'])}).strict(),
  z.object({kind:z.literal('select'),id:z.string().regex(/^[A-Za-z0-9_-]{1,100}$/)}).strict(),
