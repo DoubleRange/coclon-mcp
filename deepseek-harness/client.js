@@ -227,7 +227,7 @@ var TYPERT_REMOTE = createTypertRemoteInfo({
 }, zod.z);
 // ops/deepseek-harness/client.source.mjs
 var h = react.default.createElement, { useState, useEffect, useRef } = react.default;
-var css = `.coclon-panel{font-family:inherit;font-size:14px;line-height:1.6;--cc-line:color-mix(in srgb,currentColor 15%,transparent);--cc-muted:color-mix(in srgb,currentColor 68%,transparent);max-width:900px}.coclon-panel *{box-sizing:border-box}.coclon-panel h3,.coclon-panel h4,.coclon-panel p{margin:0}.coclon-panel h3{font-size:18px;font-weight:600}.coclon-panel h4{font-size:14px;font-weight:500}.cc-top,.cc-actions,.cc-account,.cc-metrics{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cc-top{justify-content:space-between;margin-bottom:20px}.cc-account{justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--cc-line)}.cc-metrics{gap:24px;margin-top:16px}.cc-metrics span{display:block;font-size:12px;color:var(--cc-muted)}.cc-metrics strong{font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}.cc-muted{color:var(--cc-muted);font-size:12px}.coclon-panel button,.coclon-panel input{font:inherit;color:inherit}.coclon-panel button{min-height:36px;cursor:pointer;border:0;border-radius:6px;padding:6px 12px;background:transparent}.coclon-panel button:hover{background:color-mix(in srgb,currentColor 7%,transparent)}.coclon-panel button:focus-visible,.coclon-panel a:focus-visible,.coclon-panel input:focus-visible{outline:2px solid currentColor;outline-offset:3px}.coclon-panel button:disabled{opacity:.5;cursor:default}.coclon-panel .cc-primary{background:CanvasText;color:Canvas}.cc-notice{padding:12px 0;color:var(--cc-muted);font-size:13px}.cc-error{padding:10px 0;color:#b23d32}.cc-search{display:flex;gap:8px;margin:20px 0 16px}.cc-search input{min-width:0;flex:1;border:0;box-shadow:inset 0 0 0 1px var(--cc-line);background:transparent;border-radius:6px;padding:8px 12px}.cc-grid{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}.cc-people{display:flex;flex-direction:column;gap:4px}.cc-person{display:flex;align-items:center;gap:10px;text-align:left;width:100%}.cc-person[aria-pressed=true]{background:color-mix(in srgb,currentColor 7%,transparent)}.cc-avatar{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;background:color-mix(in srgb,currentColor 8%,transparent);border-radius:8px;overflow:hidden}.cc-avatar img{width:100%;height:100%;object-fit:cover}.cc-role{padding:16px 0;border-bottom:1px solid var(--cc-line)}.cc-role:first-of-type{padding-top:12px}.cc-role-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.cc-role p{font-size:13px;color:var(--cc-muted);margin:6px 0 10px}.cc-role-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}.cc-role-foot span{font-size:12px;color:var(--cc-muted)}.cc-selected{font-size:13px;margin:16px 0;color:var(--cc-muted)}.coclon-panel a{color:inherit;text-underline-offset:3px}.cc-empty{padding:24px 0;color:var(--cc-muted);font-size:13px}@media(max-width:600px){.cc-grid{grid-template-columns:1fr;gap:16px}.cc-people{flex-direction:row;overflow-x:auto;padding-bottom:8px}.cc-person{flex:0 0 auto;width:auto}.cc-metrics{gap:20px}}`;
+var css = `.coclon-panel{font-family:inherit;font-size:14px;line-height:1.6;--cc-line:color-mix(in srgb,currentColor 15%,transparent);--cc-muted:color-mix(in srgb,currentColor 68%,transparent);max-width:900px}.coclon-panel *{box-sizing:border-box}.coclon-panel h3,.coclon-panel h4,.coclon-panel p{margin:0}.coclon-panel h3{font-size:18px;font-weight:600}.coclon-panel h4{font-size:14px;font-weight:500}.cc-top,.cc-actions,.cc-account,.cc-metrics{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.cc-top{justify-content:space-between;margin-bottom:20px}.cc-account{justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--cc-line)}.cc-metrics{gap:24px;margin-top:16px}.cc-metrics span{display:block;font-size:12px;color:var(--cc-muted)}.cc-metrics strong{font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}.cc-muted{color:var(--cc-muted);font-size:12px}.coclon-panel button,.coclon-panel input{font:inherit;color:inherit}.coclon-panel button{min-height:36px;cursor:pointer;border:0;border-radius:6px;padding:6px 12px;background:transparent}.coclon-panel button:hover{background:color-mix(in srgb,currentColor 7%,transparent)}.coclon-panel button:focus-visible,.coclon-panel a:focus-visible,.coclon-panel input:focus-visible{outline:2px solid currentColor;outline-offset:3px}.coclon-panel button:disabled{opacity:.5;cursor:default}.coclon-panel .cc-primary{background:CanvasText;color:Canvas}.coclon-panel .cc-primary:hover{background:CanvasText;color:Canvas;opacity:.85}.coclon-panel .cc-scope-active{box-shadow:inset 0 -2px 0 currentColor;border-radius:0;font-weight:600}.cc-notice{padding:12px 0;color:var(--cc-muted);font-size:13px}.cc-error{padding:10px 0;color:#b23d32}.cc-search{display:flex;gap:8px;margin:20px 0 16px}.cc-search input{min-width:0;flex:1;border:0;box-shadow:inset 0 0 0 1px var(--cc-line);background:transparent;border-radius:6px;padding:8px 12px}.cc-grid{display:grid;grid-template-columns:200px minmax(0,1fr);gap:24px}.cc-people{display:flex;flex-direction:column;gap:4px}.cc-person{display:flex;align-items:center;gap:10px;text-align:left;width:100%}.cc-person[aria-pressed=true]{background:color-mix(in srgb,currentColor 7%,transparent)}.cc-avatar{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;background:color-mix(in srgb,currentColor 8%,transparent);border-radius:8px;overflow:hidden}.cc-avatar img{width:100%;height:100%;object-fit:cover}.cc-role{padding:16px 0;border-bottom:1px solid var(--cc-line)}.cc-role:first-of-type{padding-top:12px}.cc-role-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.cc-role p{font-size:13px;color:var(--cc-muted);margin:6px 0 10px}.cc-role-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}.cc-role-foot span{font-size:12px;color:var(--cc-muted)}.cc-selected{font-size:13px;margin:16px 0;color:var(--cc-muted)}.coclon-panel a{color:inherit;text-underline-offset:3px}.cc-empty{padding:24px 0;color:var(--cc-muted);font-size:13px}@media(max-width:600px){.cc-grid{grid-template-columns:1fr;gap:16px}.cc-people{flex-direction:row;overflow-x:auto;padding-bottom:8px}.cc-person{flex:0 0 auto;width:auto}.cc-metrics{gap:20px}}`;
 var avatar = (person, large = false) => h("span", { className: "cc-avatar" }, person.portraitUrl ? h("img", {
 	src: person.portraitUrl,
 	alt: large ? person.name + "的头像" : "",
@@ -353,7 +353,7 @@ function UpdateControl({ request, installUpdate }) {
 	}, problem || notice || (update && !update.available ? "已是最新版" : "")));
 }
 function Panel({ request, installUpdate }) {
-	const [state, setState] = useState(null), [people, setPeople] = useState([]), [person, setPerson] = useState(""), [query, setQuery] = useState(""), [busy, setBusy] = useState(""), [error, setError] = useState(""), [pending, setPending] = useState("");
+	const [state, setState] = useState(null), [scope, setScope] = useState("following"), [people, setPeople] = useState([]), [person, setPerson] = useState(""), [query, setQuery] = useState(""), [busy, setBusy] = useState(""), [error, setError] = useState(""), [pending, setPending] = useState("");
 	const alive = useRef(true), sequence = useRef(0);
 	const refresh = async () => {
 		const value = await request({ kind: "status" });
@@ -366,7 +366,8 @@ function Panel({ request, installUpdate }) {
 	const search = async () => {
 		const mark = ++sequence.current, value = await request({
 			kind: "browse",
-			query
+			query,
+			scope
 		});
 		if (alive.current && mark === sequence.current) {
 			setPeople(value.people);
@@ -387,12 +388,15 @@ function Panel({ request, installUpdate }) {
 	};
 	useEffect(() => {
 		alive.current = true;
-		Promise.all([refresh(), search()]).catch((e) => alive.current && setError(e.message));
+		refresh().catch((e) => alive.current && setError(e.message));
 		return () => {
 			alive.current = false;
 			sequence.current++;
 		};
 	}, []);
+	useEffect(() => {
+		search().catch((e) => alive.current && setError(e.message));
+	}, [scope]);
 	const connect = async (mode) => {
 		const answer = await request({
 			kind: "connect",
@@ -402,6 +406,7 @@ function Panel({ request, installUpdate }) {
 		if (answer.status === "connected") {
 			setState(answer.state);
 			setPending("");
+			await search();
 		} else if (answer.url) setPending(answer.url);
 		else throw Error("授权尚未就绪 · 请重试");
 	};
@@ -430,14 +435,7 @@ function Panel({ request, installUpdate }) {
 			clearInterval(timer);
 		};
 	}, [pending]);
-	const current = people.find((p) => p.slug === person), selected = state?.roles?.find((r) => r.id === state.selectedId || r.slug === state.selectedId), account = state?.account, origin = state?.origin || "", authorized = new Set((state?.roles || []).flatMap((r) => [r.id, r.slug]));
-	const select = async (id) => {
-		const value = await request({
-			kind: "select",
-			id
-		});
-		if (alive.current) setState(value);
-	};
+	const current = people.find((p) => p.slug === person), account = state?.account, origin = state?.origin || "", authorized = new Set((state?.roles || []).flatMap((r) => [r.id, r.slug]));
 	return h("section", {
 		className: "coclon-panel",
 		"aria-label": "COCLON 控制面板"
@@ -458,7 +456,17 @@ function Panel({ request, installUpdate }) {
 	}, busy === "开始试用" ? "连接中…" : "开始试用"), origin && link(origin + "/studio/api", "管理连接"))), account && h("div", { className: "cc-metrics" }, account.mode === "trial" ? h("div", null, h("span", null, "免费剩余"), h("strong", null, account.trial?.remaining ?? "—"), h("span", null, "次")) : h("div", null, h("span", null, "积分余额"), h("strong", null, account.wallet?.balance ?? "—")), account.mode !== "trial" && h("div", null, h("span", null, "本连接剩余预算"), h("strong", null, account.connection?.remaining ?? "—")), h("div", null, h("span", null, "单次价格上限"), h("strong", null, account.connection?.maxCost ?? "—"), h("span", null, "积分")), origin && link(origin + "/studio/credits", "查看积分")), pending && h("p", { className: "cc-notice" }, link(pending, "打开登录与授权页面"), " · 授权完成后自动连接"), h("p", {
 		className: "cc-error",
 		role: "alert"
-	}, error || state?.problem || ""), selected && h("p", { className: "cc-selected" }, "当前分身：", h("strong", null, [selected.name, selected.title].filter(Boolean).join(" · "))), h("form", {
+	}, error || state?.problem || ""), h("div", {
+		className: "cc-actions",
+		"aria-label": "人物范围"
+	}, ["following", "all"].map((value) => h("button", {
+		type: "button",
+		key: value,
+		"aria-pressed": scope === value,
+		className: scope === value ? "cc-scope-active" : "",
+		disabled: Boolean(busy),
+		onClick: () => setScope(value)
+	}, value === "following" ? "我的关注" : "全部人物"))), h("form", {
 		className: "cc-search",
 		onSubmit: (event) => {
 			event.preventDefault();
@@ -482,22 +490,28 @@ function Panel({ request, installUpdate }) {
 		className: "cc-person",
 		"aria-pressed": p.slug === person,
 		onClick: () => setPerson(p.slug)
-	}, avatar(p), h("span", { className: "cc-person-copy" }, h("strong", null, p.name), h("small", null, p.headline || p.roles.map((r) => r.title).join(" · ")))))), h("div", null, current && h(react.default.Fragment, null, h("div", { className: "cc-profile" }, avatar(current, true), h("div", { className: "cc-profile-copy" }, h("h3", null, current.name), current.headline && h("p", { className: "cc-profile-headline" }, current.headline), current.intro && h("p", { className: "cc-profile-intro" }, current.intro), origin && link(origin + "/creators/" + encodeURIComponent(current.slug), "查看个人主页 ↗"))), current.experience?.length > 0 && h("div", { className: "cc-experience" }, current.experience.map((text, index) => h("p", { key: index }, text))), h("h4", { className: "cc-roles-title" }, "Ta 的赛博分身 · " + current.roles.length)), current?.roles.map((role) => {
-		const allowed = authorized.has(role.id) || authorized.has(role.slug), active = state?.selectedId === role.id || state?.selectedId === role.slug;
+	}, avatar(p), h("span", { className: "cc-person-copy" }, h("strong", null, p.name), h("small", null, p.headline || p.roles.map((r) => r.title).join(" · ")))))), h("div", null, current && h(react.default.Fragment, null, h("div", { className: "cc-profile" }, avatar(current, true), h("div", { className: "cc-profile-copy" }, h("h3", null, current.name), h("button", {
+		type: "button",
+		disabled: Boolean(busy) || !state?.connected || account?.mode === "trial",
+		"aria-pressed": current.followed,
+		onClick: () => run("保存关注", async () => {
+			await request({
+				kind: "follow",
+				slug: current.slug,
+				followed: !current.followed
+			});
+			await search();
+		})
+	}, current.followed ? "已关注" : "关注"), current.headline && h("p", { className: "cc-profile-headline" }, current.headline), current.intro && h("p", { className: "cc-profile-intro" }, current.intro), origin && link(origin + "/creators/" + encodeURIComponent(current.slug), "查看个人主页 ↗"))), current.experience?.length > 0 && h("div", { className: "cc-experience" }, current.experience.map((text, index) => h("p", { key: index }, text))), h("h4", { className: "cc-roles-title" }, "Ta 的赛博分身 · " + current.roles.length)), current?.roles.map((role) => {
+		const allowed = authorized.has(role.id) || authorized.has(role.slug);
 		return h("article", {
 			className: "cc-role",
-			key: role.id,
-			"data-selected": active
-		}, h("div", { className: "cc-role-head" }, h("h4", null, role.title), h("span", { className: "cc-muted" }, role.price + " 积分 / 次")), role.summary && h("p", null, role.summary), role.skills?.length > 0 && h("div", { className: "cc-skills" }, role.skills.map((skill) => h("span", { key: skill }, skill))), h("div", { className: "cc-role-foot" }, h("span", null, allowed ? "可调用" : state?.connected ? "需授权" : "连接后选择"), h("button", {
-			type: "button",
-			disabled: Boolean(busy) || !allowed || active,
-			className: active ? "" : "cc-primary",
-			onClick: () => run("切换分身", () => select(role.id))
-		}, active ? "已选择" : "设为当前分身")));
-	}))) : h("p", { className: "cc-empty" }, state ? "暂无匹配人物" : "读取人物…"), h("p", {
+			key: role.id
+		}, h("div", { className: "cc-role-head" }, h("h4", null, role.title), h("span", { className: "cc-muted" }, role.price + " 积分 / 次")), role.summary && h("p", null, role.summary), role.skills?.length > 0 && h("div", { className: "cc-skills" }, role.skills.map((skill) => h("span", { key: skill }, skill))), h("div", { className: "cc-role-foot" }, h("span", null, allowed ? "可调用" : state?.connected ? "需授权" : "连接后调用")));
+	}))) : h("p", { className: "cc-empty" }, state ? scope === "following" ? "暂无关注人物 · 在全部人物中关注 Ta" : "暂无匹配人物" : "读取人物…"), h("p", {
 		className: "cc-muted",
 		style: { marginTop: 20 }
-	}, "选择不扣费 · 实际调用沿用平台计费与授权"));
+	}, "按任务灵活调用 · 支持多个分身协作 · 沿用平台计费与授权"));
 }
 var inject = ["slots", "remote"];
 async function apply(ctx) {

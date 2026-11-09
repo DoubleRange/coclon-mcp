@@ -14,8 +14,8 @@ export class ControlPanel {
   this.selectionFile=this.file+'.selection';this.selectedId=config.preferredProfession||'';this.busy=null;
  }
  async load(){const saved=await read(this.selectionFile);if(saved?.origin===this.origin&&typeof saved.professionId==='string')this.selectedId=saved.professionId;}
- async json(path,token){
-  const response=await this.fetcher(this.origin+path,{headers:token?{Authorization:'Bearer '+token}:{},redirect:'error',signal:AbortSignal.timeout(20000)});
+ async json(path,token,body){
+  const response=await this.fetcher(this.origin+path,{method:body?'POST':'GET',body:body?JSON.stringify(body):undefined,headers:{...(token?{Authorization:'Bearer '+token}:{}),...(body?{'Content-Type':'application/json'}:{})},redirect:'error',signal:AbortSignal.timeout(20000)});
   if(!response.ok)throw Object.assign(Error(response.status===401?'连接已过期 · 重新登录':response.status===403?'当前连接无此权限':'暂时无法连接 COCLON · 请重试'),{status:response.status});return response.json();
  }
  async status(){
@@ -33,9 +33,9 @@ export class ControlPanel {
    if(result.status!=='connected')throw Error('连接尚未完成');return {status:'connected',state:await this.status()};
   })();try{return await this.busy;}finally{this.busy=null;}
  }
- async browse(query=''){
-  if(typeof query!=='string'||query.length>100)throw Error('搜索内容过长');const result=await this.json('/api/creators?q='+encodeURIComponent(query));
-  return {people:(result.creators||[]).map(person=>({slug:person.slug,name:person.name||'',headline:(person.role||person.publicExpert?.headline||'').slice(0,100),intro:(person.intro||'').slice(0,700),experience:(person.experienceSummaries||[]).filter(x=>typeof x==='string').slice(0,2).map(x=>x.slice(0,160)),portraitUrl:this.image(person.portraitUrl),roles:(person.professions||[]).map(r=>this.role({...r,personaSlug:person.slug,name:person.name}))}))};
+ async browse(query='',scope='following'){
+  if(typeof query!=='string'||query.length>100)throw Error('搜索内容过长');if(!['following','all'].includes(scope))throw Error('人物范围无效');const saved=await read(this.file),token=saved?.baseUrl===this.origin?saved.token:null;if(!token&&scope==='following')return {people:[],requiresAccount:true};const result=await this.json((token?'/v1/people':'/api/creators')+'?scope='+scope+'&q='+encodeURIComponent(query),token);
+  return {people:(result.creators||[]).map(person=>({slug:person.slug,followed:person.followed===true,name:person.name||'',headline:(person.role||person.publicExpert?.headline||'').slice(0,100),intro:(person.intro||'').slice(0,700),experience:(person.experienceSummaries||[]).filter(x=>typeof x==='string').slice(0,2).map(x=>x.slice(0,160)),portraitUrl:this.image(person.portraitUrl),roles:(person.professions||[]).map(r=>this.role({...r,personaSlug:person.slug,name:person.name}))}))};
  }
  image(value){try{const u=new URL(value,this.origin);return u.origin===this.origin&&(u.pathname.startsWith('/api/site/assets/')||u.pathname.startsWith('/assets/'))?u.href:'';}catch{return '';}}
  async select(id){
@@ -45,6 +45,7 @@ export class ControlPanel {
  async action(input){
   if(!input||typeof input!=='object'||Array.isArray(input))throw Error('操作无效');
   if(input.kind==='check_update')return this.updates.check();if(input.kind==='prepare_update')return this.updates.prepare(input);
-  if(input.kind==='status')return this.status();if(input.kind==='browse')return this.browse(input.query||'');if(input.kind==='connect')return this.connect(input.mode);if(input.kind==='select')return this.select(input.id);throw Error('操作无效');
+  if(input.kind==='follow'){const saved=await read(this.file);if(!saved?.token||saved.baseUrl!==this.origin)throw Error('登录账号后关注人物');if(typeof input.followed!=='boolean'||typeof input.slug!=='string')throw Error('关注操作无效');return this.json('/v1/people',saved.token,{slug:input.slug,followed:input.followed});}
+  if(input.kind==='status')return this.status();if(input.kind==='browse')return this.browse(input.query||'',input.scope||'following');if(input.kind==='connect')return this.connect(input.mode);if(input.kind==='select')return this.select(input.id);throw Error('操作无效');
  }
 }
