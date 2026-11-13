@@ -16,20 +16,21 @@ export class ControlPanel {
  async load(){const saved=await read(this.selectionFile);if(saved?.origin===this.origin&&typeof saved.professionId==='string')this.selectedId=saved.professionId;}
  async json(path,token,body){
   const response=await this.fetcher(this.origin+path,{method:body?'POST':'GET',body:body?JSON.stringify(body):undefined,headers:{...(token?{Authorization:'Bearer '+token}:{}),...(body?{'Content-Type':'application/json'}:{})},redirect:'error',signal:AbortSignal.timeout(20000)});
-  if(!response.ok)throw Object.assign(Error(response.status===401?'连接已过期 · 重新登录':response.status===403?'当前连接无此权限':'暂时无法连接 COCLON · 请重试'),{status:response.status});return response.json();
+  if(!response.ok)throw Object.assign(Error(response.status===401?'连接已过期 · 重新连接':response.status===403?'当前连接无此权限':'暂时无法连接 COCLON · 已保存的连接保留'),{status:response.status});return response.json();
  }
  async status(){
-  const config=await read(this.file);let account=null,roles=[],problem='';
-  if(config?.token&&config.baseUrl===this.origin){try{account=await this.json('/v1/account',config.token);roles=(await this.json('/v1/professions',config.token)).professions||[];}catch(e){problem=e.message;}}
+  const config=await read(this.file);let account=null,roles=[],problem='',needsAuthorization=false;
+  const saved=Boolean(config?.token&&config.baseUrl===this.origin);
+  if(saved){const [identity,catalog]=await Promise.allSettled([this.json('/v1/account',config.token),this.json('/v1/professions',config.token)]);if(identity.status==='fulfilled')account=identity.value;else{needsAuthorization=identity.reason.status===401;problem=needsAuthorization?'连接已过期 · 重新连接':'网络暂不可用 · 已保存的连接保留';}if(catalog.status==='fulfilled')roles=catalog.value.professions||[];else if(!problem)problem='分身列表暂未载入 · 请刷新';}
   const pending=await read(this.file+'.pending'),url=pending?.deadline>Date.now()?this.authorizationUrl(pending.verification_uri_complete):'';
-  return {origin:this.origin,connected:Boolean(account),account,roles:roles.map(role=>this.role(role)),selectedId:this.selectedId,pendingUrl:url,problem};
+  return {origin:this.origin,connected:Boolean(account),saved,needsAuthorization,account,roles:roles.map(role=>this.role(role)),selectedId:this.selectedId,pendingUrl:url,pendingExpiresAt:url?pending.deadline:null,problem};
  }
  role(r){return {id:r.id||r.slug||'',slug:r.slug||'',name:r.name||r.ownerName||'',title:r.serviceTitle||r.title||r.role||'赛博分身',price:r.price??0,personaSlug:r.personaSlug||'',summary:(r.serviceOutcome||r.intro||'').slice(0,240),skills:(r.skillNames||[]).filter(x=>typeof x==='string').slice(0,4).map(x=>x.slice(0,60))};}
  authorizationUrl(value){try{const u=new URL(value);return u.origin===this.origin&&u.pathname==='/connect'?u.href:'';}catch{return '';}}
  async connect(mode){
   if(!['account','trial'].includes(mode))throw Error('连接方式无效');if(this.busy)return this.busy;
   this.busy=(async()=>{const result=await this.call('real_connect',mode==='account'?{account:true}:{trial:true});
-   if(result.status==='authorization_required')return {status:'authorization_required',url:this.authorizationUrl(result.authorizationUrl),retryAfterSeconds:Math.max(5,result.retryAfterSeconds||5)};
+   if(result.status==='authorization_required'){const pending=await read(this.file+'.pending');return {status:'authorization_required',url:this.authorizationUrl(result.authorizationUrl),expiresAt:pending?.deadline||Date.now()+600000,retryAfterSeconds:Math.max(5,result.retryAfterSeconds||5)};}
    if(result.status!=='connected')throw Error('连接尚未完成');return {status:'connected',state:await this.status()};
   })();try{return await this.busy;}finally{this.busy=null;}
  }

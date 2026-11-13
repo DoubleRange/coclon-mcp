@@ -2,6 +2,17 @@
 
 官方规范核对：2026-11-09；验证版本 DSH 0.2.2-rc.1、Node 24.11.0。使用官方 MCP 客户端。插件不改变平台人格、检索、价格、权限或主 Agent 模型，不附带任何私人材料。
 
+
+## 人物、分身与连接
+
+人物是认识和关注的对象；分身是该人在某个方向上的能力，也是实际调用与计费的单位。关注不等于授权，浏览不启动工作。一个人物可以有多个分身，每次任务可以指定或组合不同分身，没有全局“当前分身”。
+
+- **免费试用**：不必登录或打开授权页，默认浏览全部人物；十次成功任务由所有人物、分身和渠道共用，不是每个分身各十次。
+- **连接账号**：在一个网页勾选公开调用及需要的可选编辑权限、确认预算与期限，然后返回插件；只连接一次，凭据持续保存。人物与分身在接入后再选。
+- **插件内选择**：先点人物，再看 Ta 的分身。点“复制调用口令”，发送给当前 Agent；口令带确切分身标识，复用现有连接，不改变主模型。
+- **范围与费用**：账号默认显示关注人物，可切全部人物；试用默认全部。插件分别显示试用余量、账号余额和连接预算。范围不足或到期才需要调整授权，切换人物本身不重新授权。
+
+0.5.0 修正浏览范围和关注请求与原生 RPC 校验不一致的问题；网络暂不可用保留凭据和原授权请求，界面继续检查同一连接。等待确认、已授权及凭据已保存是不同阶段，不能把人物列表加载失败当作授权失败。账号模式与试用模式仅由用户主动切换，不自动转为付费。
 ## 给使用者
 
 网站原来的「复制给 Agent」入口保持不变。Agent 读取 `/agent.json` 的 `plugins.deepseekHarness`，取得当前服务器的安装包、校验值和操作指南。独立清单：`/deepseek-harness.json`。
@@ -9,7 +20,7 @@
 先检查当前 profile 是否已有指向同一 COCLON 地址的 `real` / `coclon` 连接。有则复用。没有才在当前 profile 安装插件；不要另外建立一个用户不会启动的 profile。
 
 ```sh
-dsh plugin --profile desktop add https://sellers-sleeping-accounting-retirement.trycloudflare.com/downloads/dsh-plugin-coclon-0.4.0.tgz
+dsh plugin --profile desktop add https://sellers-sleeping-accounting-retirement.trycloudflare.com/downloads/dsh-plugin-coclon-0.5.0.tgz
 ```
 
 `desktop` 必须替换为实际正在使用的 profile；Web 默认通常为 `web`。也可在插件页面添加包地址，或让创造模式下的 Plugin Manager 按当前版本提供的 `install_bundle` 工具 schema 安装此 tarball。不要猜工具参数。先看安装结果，再看工具是否出现：`application: applied` 才是当前会话已应用；`restart-required` 需重启当前 profile；安装失败不算已连接。
@@ -18,7 +29,7 @@ dsh plugin --profile desktop add https://sellers-sleeping-accounting-retirement.
 
 重启或切换分身不重新安装。插件沿用 `.real/mcp/<origin-hash>.json`，亦可在配置中指定已有私有 `credentialFile`。网络失败保留凭据；仅失效、撤销或新的权限需求才重新授权。试用耗尽不能自动转付费。编辑个人资料或分身需本人单独授予对应权限，插件不会发布、改价或扩大授权。
 
-## 原生控制面板（0.4.0）
+## 原生控制面板（0.5.0）
 
 打开 Harness「插件 → COCLON」，即可直接操作：
 
