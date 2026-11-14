@@ -2,6 +2,8 @@
 
 官方规范核对：2026-11-09；验证版本 DSH 0.2.2-rc.1、Node 24.11.0。使用官方 MCP 客户端。插件不改变平台人格、检索、价格、权限或主 Agent 模型，不附带任何私人材料。
 
+2026-11-14：已用官方原生 spawn 服务、COCLON 模型 API 和真实上游跑通文件读取、修改、检查失败、返修、复查通过，共 6 轮。使用隔离账号和文件，主 Agent 路由保持独立；不代表已替用户配置桌面允许列表。任务上下文与复现见 [模型 API 长任务](https://github.com/DoubleRange/coclon/blob/research/skill-handoff-round2/docs/provider-task-context.md)。平台不再另设 4/24/64 轮或试用小上下文限制。
+
 
 ## 人物、分身与连接
 
@@ -76,6 +78,8 @@ MCP 是给 Agent 的调用接口；插件是在同一接口上增加可见的账
 
 用户明确选择该模型后，COCLON 负责模型推理与分身上下文，Harness 继续负责执行工具。不要因安装 MCP 插件自动改掉主模型。
 
+希望主 Agent 保持原模型时，直接按下面的子智能体方式设置。所谓“默认分身模型”是从授权模型列表中选出的准确模型 ID，不需要再开户到上游模型公司。
+
 ### 给子智能体单独分配模型
 
 官方已发布 SDK `0.2.2-rc.1` 支持此能力，但要分别满足三个条件：
@@ -87,6 +91,10 @@ MCP 是给 Agent 的调用接口；插件是在同一接口上增加可见的账
 例如 FX 的「色彩搭配」模型 ID 为 `real-frontier-0a3958b110`，允许组合是 `provider=coclon` 和该精确模型 ID；`coclon` 必须替换成实际已注册的 Provider ID。先由 `/v1/models` 确认可见，再设置，不能仅依据公开页面取得访问权。
 
 新对话中调用 `list_subagent_models`（当前安装版本提供此工具时）核对可用组合，再用实际子智能体工具 schema 同时传入 `provider` 与 `model`。不要猜工具名或将模型 ID 填成 provider。子智能体执行后确认其实际模型；主 Agent 保持原模型。安装检查只做发现，不发起计费任务。
+
+一次配置后复用连接。任务口令可以是：“用 COCLON 的该分身模型启动原生子 Agent，使用你自己的文件与执行工具完成任务；不要用 real_work 代替模型 API，不切换主 Agent。”具体 provider/model 从本机可用列表读取。
+
+为自定义分身模型保守设置 `contextWindow: 64000`、`maxTokens: 4500`、文字输入；它们是当前接入建议，不是底层上游能力声明。若使用 Harness `dsh-compaction-basic`，为小于默认窗口的模型明确配置 `headroomTokens: 4096`、`maxTokens: 2048`、`retainTokens: 8192`；不能照搬默认 65536 余量。参考验证脚本用此配置挂载官方压缩器，但此次短任务未触发压缩；压缩消息接续另外有协议回归。
 
 若 Agent 只列出 `sufe-kun`，它只是当前可见的模型路由；需依次核对上述三项，不能直接断言 COCLON 未授权 FX。插件的 MCP 选择面板不会自动注册 API 模型。MCP 路径是原模型向 FX 咨询；API 子智能体路径才是子智能体使用 FX 的人格、Skills 与知识推理，同时由 Harness 执行工具。
 
